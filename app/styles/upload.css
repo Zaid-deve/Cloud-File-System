@@ -1,0 +1,35 @@
+.upload-drop.active {
+    box-shadow: 0 0 5px var(--color--primary);
+    opacity: .8;
+}
+
+.file-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    width: 100%;
+    overflow: hidden;
+}
+
+.file-icon {
+    font-size: 2rem;
+}
+
+.progress-wrapper.active>div {
+    border: 2px dotted var(--color--primary);
+}
+
+.progress-container {
+    background: var(--color--light);
+}
+
+.progress-svg image {
+    cursor: pointer;
+}
+
+.drop-img {
+    background: url(../images/file-management-administration-data-filing-concept-folder-gallery-records-database-flat-illustration-vector-template_128772-1923.webp) center no-repeat;
+    background-size: contain;
+    height: clamp(150px, 40vh, 190px);
+    width: 100%;
+}

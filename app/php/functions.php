@@ -1,0 +1,4 @@
+<?php 
+
+
+// standard functions

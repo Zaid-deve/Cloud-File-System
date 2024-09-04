@@ -1,0 +1,216 @@
+/* CSS CONFIG DEFAULTS AND CONFIG CLASSES */
+
+* {
+    user-select: none;
+    font-family: var(--font--primary);
+    box-shadow: none;
+    border: none;
+    line-height: 1.1em;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* reuseable classes */
+
+.xcenter {
+    justify-content: center;
+}
+
+.ycenter {
+    align-items: center;
+}
+
+.flex-center {
+    align-items: center;
+    justify-content: center;
+}
+
+/* button styles */
+
+.btn {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    position: relative;
+    padding: 12px 16px;
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+}
+
+.btn.has-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn.working * {
+    visibility: hidden;
+}
+
+.btn.working::before {
+    content: '\f1ce';
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    font-size: 1.5em;
+    animation: spin 1s ease infinite;
+    color: var(--color--light);
+}
+
+.btn :where(i, span) {
+    color: var(--color--light);
+}
+
+.btn span {
+    font-weight: 600;
+}
+
+.btn-rounded {
+    height: 38px;
+    width: 38px;
+    border-radius: 150px;
+    padding: 0 !important;
+}
+
+.btn-rounded.lg {
+    height: 42px;
+    width: 42px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* override bs5 classes */
+.prime-color {
+    color: var(--color--primary);
+}
+
+.bg-prime-color {
+    background-color: var(--color--primary);
+}
+
+.secondary-color {
+    color: var(--color--primary);
+}
+
+.bg-secondary-color {
+    background-color: var(--color--secondary);
+}
+
+.dark-color {
+    color: var(--color--dark);
+}
+
+.bg-dark-color {
+    background: var(--color--dark);
+}
+
+.danger-color {
+    color: var(--color--danger);
+}
+
+.bg-danger-color {
+    background: var(--color--danger);
+}
+
+.light-color {
+    color: var(--color--light);
+}
+
+.bg-light-color {
+    background: var(--color--light);
+}
+
+.bg-light-30 {
+    background: var(--color--light--30);
+}
+
+/* image */
+
+.img-cover {
+    object-fit: cover;
+}
+
+.img-contain {
+    object-fit: contain;
+}
+
+/* icons sizes */
+
+.icon-sm {
+    font-size: .95em;
+}
+
+.icon-normal {
+    font-size: 1.2rem;
+}
+
+.icon-md {
+    font-size: 1.4em;
+}
+
+.icon-lg {
+    font-size: 1.6em;
+}
+
+/* body */
+
+body {
+    height: 100vh;
+    padding-top: var(--header--height);
+}
+
+p {
+    font-size: .92rem;
+}
+
+.form-control {
+    box-shadow: none !important;
+    background: transparent;
+    font-weight: 600;
+    transform: all .2s ease;
+}
+
+.form-control:not(:disabled) {
+    border: 2px dotted var(--color--dark);
+}
+
+.form-control.lg {
+    height: 45px;
+}
+
+.form-control:focus {
+    border-color: var(--color--primary);
+}
+/* animaton classes */
+
+.animate-logo {
+    animation: fadeIn 1.5s linear infinite alternate;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0.2;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
