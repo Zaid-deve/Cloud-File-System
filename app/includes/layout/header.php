@@ -1,12 +1,14 @@
 <header class="navbar navbar-expand-lg py-4 fixed-top w-100 bg-white">
     <div class="container-fluid">
-        <button class="btn btn-toggle-sidebar bg-light-color p-2">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+        <?php if (isset($showNavToggle)) { ?>
+            <button class="btn btn-toggle-sidebar bg-light-color p-2" onclick="$('.sidebar-wrapper').toggleClass('hide')">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        <?php } ?>
 
-        <a class="navbar-brand d-flex flex-center gap-3 ms-3" href="#">
+        <a class="navbar-brand d-flex flex-center gap-3 ms-3" href="/cfs/app">
             <img src="<?php echo "$baseurl/app/images/brand_logo.webp" ?>" alt="Logo" class="img-contain" height="40">
             <div class="fw-bolder logo-text">Cloud <br class="d-block d-sm-none"> Storage</div>
         </a>

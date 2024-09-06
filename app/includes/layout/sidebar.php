@@ -1,4 +1,4 @@
-<aside class="sidebar p-3 p-sm-4 hide">
+<aside class="sidebar p-3 p-sm-4 bg-white rounded-5 h-100">
     <div>
         <div onclick="location.href = '/cfs/app/user/account.php'" class="account-block bg-light-color py-2 px-3 rounded-4">
             <div class="d-flex ycenter gap-2">
@@ -7,7 +7,7 @@
                 </div>
                 <div class="profile-info">
                     <strong class="d-block"><?php echo $user_name ?? 'add name' ?></strong>
-                    <small class="text-muted">---</small>
+                    <small class="text-muted"><?php echo $user_join_date ?? '---' ?></small>
                 </div>
                 <div class="ms-auto">
                     <a href="/cfs/app/user/logout.php" class="btn pe-0">

@@ -1,5 +1,6 @@
 <?php
 
+$showNavToggle = true;
 require_once "config/autoload.php";
 
 require_once "includes/layout/head.php";
@@ -27,11 +28,11 @@ require_once "includes/layout/head.php";
 
 
     <div class="container-fluid p-0 h-100">
-        <div class="row m-0 g-0 h-100">
-            <div class="col-md-5 col-xl-3 sidebar-wrapper h-100">
+        <div class="row g-0 m-0 h-100">
+            <div class="col-12 col-md-5 col-lg-4 h-100 ps-md-3 py-md-3 sidebar-wrapper">
                 <?php require_once "includes/layout/sidebar.php" ?>
             </div>
-            <div class="col-12 col-md-7 col-xl-9 h-100 bg-light position-relative content-wrapper py-3">
+            <div class="col h-100 py-4 overflow-scroll">
                 <div class="container px-4">
                     <div class="d-flex ycenter flex-wrap bg-white rounded-4 p-3 gap-3">
                         <div class="file-searchbar">
@@ -101,36 +102,36 @@ require_once "includes/layout/head.php";
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- file options menu -->
-            <div class="menu-list position-absolute top-0 start-0 shadow-sm rounded-3 overflow-hidden bg-white d-none">
-                <ul class="list-group">
-                    <li class="list-group-item border-0 active">
-                        <div class="d-flex ycenter gap-2">
-                            <i class="fa-solid fa-trash icon-normal"></i>
-                            <span>Delete file</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item border-0">
-                        <div class="d-flex ycenter gap-2">
-                            <i class="fa-solid fa-file-pen icon-normal"></i>
-                            <span>Edit file</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item border-0">
-                        <div class="d-flex ycenter gap-2">
-                            <i class="fa-solid fa-share icon-normal"></i>
-                            <span>Share file</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item border-0">
-                        <div class="d-flex ycenter gap-2">
-                            <i class="fa-solid fa-lock icon-normal"></i>
-                            <span>Hide file</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <!-- file options menu -->
+        <div class="menu-list position-absolute top-0 start-0 shadow-sm rounded-3 overflow-hidden bg-white d-none">
+            <ul class="list-group">
+                <li class="list-group-item border-0 active">
+                    <div class="d-flex ycenter gap-2">
+                        <i class="fa-solid fa-trash icon-normal"></i>
+                        <span>Delete file</span>
+                    </div>
+                </li>
+                <li class="list-group-item border-0">
+                    <div class="d-flex ycenter gap-2">
+                        <i class="fa-solid fa-file-pen icon-normal"></i>
+                        <span>Edit file</span>
+                    </div>
+                </li>
+                <li class="list-group-item border-0">
+                    <div class="d-flex ycenter gap-2">
+                        <i class="fa-solid fa-share icon-normal"></i>
+                        <span>Share file</span>
+                    </div>
+                </li>
+                <li class="list-group-item border-0">
+                    <div class="d-flex ycenter gap-2">
+                        <i class="fa-solid fa-lock icon-normal"></i>
+                        <span>Hide file</span>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 

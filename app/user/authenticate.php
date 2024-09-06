@@ -11,11 +11,12 @@ if (!isset($isAuthNotRequired)) {
         header("Location:$baseurl/app/user/auth/signin.php");
         die("An error occured !");
     } else {
-        $data = $user::fetchUser($db, $authType, $uid, ['user_email', 'user_profile', 'user_name']);
+        $data = $user::fetchUser($db, $authType, $uid, ['user_email', 'user_profile', 'user_name', 'user_timestamp']);
         if ($data) {
             $user_email = $data['user_email'];
             $user_profile = $data['user_profile'];
             $user_name = $data['user_name'];
+            $user_join_date = getDiff($data['user_timestamp']);
         }
     }
 }

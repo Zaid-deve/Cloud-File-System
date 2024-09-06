@@ -9,7 +9,6 @@ require_once "../includes/layout/head.php";
 
     <!-- BODY -->
 
-    <!-- COMPS -->
     <?php
 
     require_once "../includes/layout/header.php";
@@ -19,23 +18,26 @@ require_once "../includes/layout/head.php";
 
     ?>
 
-    <div class="container my-5">
+    <div class="container py-4">
         <!-- User Info Card -->
         <div class="card mb-4 border-0 rounded-5 py-3 p-4">
             <div class="card-body">
-                <div class="d-flex align-items-center flex-wrap">
-                    <img src="../images/default.png" alt="ProfileImg" class="rounded-circle me-3" width="50">
+                <div class="d-flex align-items-center flex-wrap row-gap-4">
+                    <img src="<?php echo $user_profile ?>" alt="ProfileImg" class="rounded-circle me-3 is-profile userprofile" width="40%"  style="max-width: 65px">
                     <div>
-                        <h5 class="mb-1 fw-bold">John Doe</h5>
-                        <p class="mb-0 fw-bold prime-color">johndoe@example.com</p>
+                        <h5 class="mb-1 fw-bold useranme"><?php echo $user_name ?></h5>
+                        <p class="mb-0 fw-bold prime-color useremail"><?php echo $user_email ?></p>
                     </div>
-                    <button class="btn has-icon ms-auto">
-                        <i class="fa-solid fa-user-pen prime-color"></i>
-                        <span class="prime-color">Edit Profile</span>
-                    </button>
-                    <a href="logout.php" class="ms-2">
-                        <i class="fa-solid fa-power-off icon-md prime-color"></i>
-                    </a>
+                    <div class="d-flex flex-center ms-auto">
+                        <button class="btn has-icon ms-auto text-decoration-underline btn-edit-profile">
+                            <i class="fa-solid fa-user-pen dark-color"></i>
+                            <span class="dark-color">Edit Profile</span>
+                        </button>
+                        <a class="btn has-icon" href="logout.php">
+                            <i class="fa-solid fa-power-off icon-md danger-color"></i>
+                            <span class="danger-color">Sign out</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -77,6 +79,14 @@ require_once "../includes/layout/head.php";
         </div>
     </div>
 
+
+    <!-- SCRIPTS -->
+    <script src="../js/config/config.js"></script>
+    <script src="../js/functions.js"></script>
+    <script src="../js/img.js"></script>
+    <script src="../js/file/functions.js"></script>
+    <script src="../js/popup.js"></script>
+    <script src="../js/user/account.js"></script>
 
 </body>
 

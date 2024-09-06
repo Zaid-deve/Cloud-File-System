@@ -3,11 +3,12 @@
     opacity: .8;
 }
 
-.file-title {
+.file-name {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     width: 100%;
+    white-space: normal;
     overflow: hidden;
 }
 
