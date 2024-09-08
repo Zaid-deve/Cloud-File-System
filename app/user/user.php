@@ -1,5 +1,6 @@
 <?php
 
+use Google\Service\ShoppingContent\ReturnPolicy;
 
 class User
 {
@@ -41,6 +42,24 @@ class User
         if ($stmt) {
             return array_diff($stmt, $return);
         }
+    }
+
+    function getAccountSize(Db $conn, $id)
+    {
+        $stmt = $conn->qry("SELECT SUM(file_size) as flimit FROM file_uploads WHERE file_uploader_id = ?", [$id]);
+        if ($stmt) {
+            return $stmt['flimit'];
+        }
+    }
+
+    function isFileUploadLimitExceeded(Db $conn, $id, $bytes = 0)
+    {
+        $limit = $this->getAccountSize($conn, $id);
+        if (($limit + $bytes ?? 0) < MAX_FILE_UPLOAD_LIMIT_PER_USER) {
+            return false;
+        }
+
+        return true;
     }
 
     function logout()

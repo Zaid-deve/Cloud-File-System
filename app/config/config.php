@@ -8,6 +8,11 @@ $origin = $_SERVER['REQUEST_URI'];
 
 $baseurl = "$scheme://$server/cfs";
 
+// root constant for classes
+define("DOC_ROOT", $root);
+define("MAX_FILE_UPLOAD_SIZE", (1024 * 1024) * 75);
+define("MAX_FILE_UPLOAD_LIMIT_PER_USER", (1024 * 1024) * 50);
+
 // default timezone 
 date_default_timezone_set("asia/kolkata");
 

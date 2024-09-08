@@ -546,6 +546,8 @@ class Client
         $this->downloadUrl = $response['downloadUrl'];
         $this->reAuthTime = Carbon::now('UTC');
         $this->reAuthTime->addSeconds($this->authTimeoutSeconds);
+
+        return $response;
     }
 
     /**

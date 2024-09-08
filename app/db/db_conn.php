@@ -37,8 +37,24 @@ class Db
         }
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->conn->lastInsertId();
+    }
+
+    public function getErr()
+    {
+        return $this->conn->errorInfo()['0'];
+    }
+
+    public function closeConn()
+    {
+        $this->conn = null;
+    }
+
+    public function __destruct()
+    {
+        $this->closeConn();
     }
 }
 

@@ -32,7 +32,7 @@ require_once "../includes/layout/head.php"
                         <div class="drop-img"></div>
                         <div class="mt-4">
                             <h5 class="mb-1 fw-bold">Browse Or Drop Files Heare</h5>
-                            <small class="text-muted">You can select upto 75mb of each file</small>
+                            <small class="text-muted">You can select upto 50 MB of each file and 0.5 GB of total account size</small>
                         </div>
                         <button class="btn bg-prime-color w-100 has-icon gap-3 rounded-3 py-3 mt-3 mb-1 btn-browse-files">
                             <i class="fa-solid fa-folder"></i>
@@ -47,7 +47,7 @@ require_once "../includes/layout/head.php"
     </div>
 
     <!-- UPLOAD PROGRESS CONTAINER -->
-    <div class="fixed-top h-100 w-100 z-1 progress-container d-none bg-white">
+    <div class="fixed-top h-100 w-100 z-1 progress-container d-none bg-white overflow-scroll">
         <div class="container-fluid p-0">
             <div class="d-flex ycenter p-4 gap-3 bg-white">
                 <i class="fa-solid fa-list-check icon-lg"></i>
