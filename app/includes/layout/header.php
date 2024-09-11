@@ -20,7 +20,7 @@
                     <span class="fw-bold">Login</span>
                 </a>
             <?php } else { ?>
-                <a class="btn bg-primary has-icon px-md-5 rounded-5" href="<?php echo "$baseurl/app/upload/upload.php" ?>">
+                <a class="btn bg-prime-color has-icon px-md-5 rounded-5" href="<?php echo "$baseurl/app/upload/upload.php" ?>">
                     <i class="fa-solid fa-upload fs-6"></i>
                     <span class="fw-bold fs-6">Upload</span>
                 </a>

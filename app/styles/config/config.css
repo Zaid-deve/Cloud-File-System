@@ -5,7 +5,7 @@
     font-family: var(--font--primary);
     box-shadow: none;
     border: none;
-    line-height: 1.1em;
+    line-height: 1.2em;
 }
 
 *::-webkit-scrollbar {

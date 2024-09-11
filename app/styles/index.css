@@ -35,14 +35,28 @@ body{
     z-index: 999;
     max-width: 260px;
     width: 100%;
+    visibility: hidden;
+    transition: transform .2s ease;
+    transform-origin: top left;
+    transform: scale(0);
+}
+
+.menu-list.show{
+    visibility: visible;
+    transform: scale(1);
 }
 
 .menu-list .list-group-item{
     padding: 14px 16px;
     cursor: pointer;
 }
+
+.menu-list .list-group-item i{
+    color: #585a6e;
+}
 .menu-list .list-group-item span{
     font-weight: 600;
+    color: #585a6e;
 }
 
 .menu-list .list-group-item:is(:hover,.active){
@@ -50,5 +64,5 @@ body{
 }
 
 .menu-list .list-group-item:is(:hover,.active) *{
-    color: var(--color--dark);
+    color: var(--color--primary);
 }

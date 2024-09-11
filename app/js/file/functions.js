@@ -62,3 +62,39 @@ async function addFileMetaData(file, fileId, callback) {
         $.post(`${baseurl}/app/php/b2/addFileMetaData.php`, fileData, callback);
     }
 }
+
+
+
+// to fetch files
+
+function fetchFiles(options) {
+    let data = { filter: options?.filter ?? null, passKey: options?.passKey ?? null };
+
+    try {
+        $.post(`${baseurl}/app/php/b2/fetchFiles.php`, data, function (resp) {
+            const r = JSON.parse(resp);
+            if (r.Success) {
+                let files = r.Files;
+                if (!Array.isArray(files)) {
+                    files = [files];
+                }
+
+                options?.success(files)
+            } else {
+                throw new Error(r.Err);
+            }
+        }).fail(() => { throw new Err('Network Error') })
+    } catch (e) {
+        if (options?.error) {
+            options.error(e || 'Fetching Files Failed !');
+        } else {
+            showErr(e || 'Fetching Files Failed !');
+        }
+    }
+}
+
+function searchFiles(files, qry) {
+    if (files) {
+        return __Files.filter(f => f.name.includes(qry) || f.type == qry);
+    }
+}

@@ -7,12 +7,20 @@
     margin-top: 4px;
 }
 
+.sidebar-list .list-group-item a :where(i, span) {
+    font-weight: 550 !important;
+}
+
+.sidebar-list .list-group-item a :where(i) {
+    font-size: 1.2rem;
+}
+
 .sidebar-list .list-group-item:is(:hover, .active) {
     background: var(--color--light);
 }
 
 .sidebar-list .list-group-item:is(:hover, .active) a :where(i, span) {
-    color: var(--color--dark);
+    color: var(--color--primary);
 }
 
 .sidebar-wrapper {

@@ -27,4 +27,4 @@ $(function(){
     $(".btn-update-profile").click(function(){
         showErr('Service unavailable at a movement');
     })
-})
+});

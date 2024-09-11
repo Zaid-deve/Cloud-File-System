@@ -22,19 +22,26 @@ class Db
 
     public function qry($qry, $params = [])
     {
-        if ($qry) {
-            $this->stmt = $this->conn->prepare($qry);
-            $res = $this->stmt->execute($params);
-            if ($res) {
-                if (stripos($qry, "SELECT") === 0) {
-                    return $this->stmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            if ($qry) {
+                $this->stmt = $this->conn->prepare($qry);
+                $res = $this->stmt->execute($params);
+                if ($res) {
+                    if (stripos($qry, "SELECT") === 0) {
+                        $data = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+                        if (count($data) == 1) {
+                            return $data[0];
+                        }
+                        return $data;
+                    }
+
+                    return $this->stmt->rowCount();
                 }
-
-                return $this->stmt->rowCount();
             }
-
-            return false;
+        } catch (Exception $e) {
         }
+
+        return false;
     }
 
     public function getId()
@@ -44,7 +51,7 @@ class Db
 
     public function getErr()
     {
-        return $this->conn->errorInfo()['0'];
+        return $this->conn->errorInfo()['1'];
     }
 
     public function closeConn()
