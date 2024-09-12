@@ -4,14 +4,11 @@ $(function () {
     let debounceTimer,
         debounceDelay = 200;
 
-    searchBox.on('input', function (ev) {
+    searchBox.on('input', function () {
         let qry = searchBox.val().trim();
         clearTimeout(debounceTimer);
         if (!qry) {
-            console.log(e.keyCode);
-            if(ev.keyCode !== 8){
-                displayFiles(__Files);
-            }
+            displayFiles(__Files);
             return;
         }
 
