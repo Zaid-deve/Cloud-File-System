@@ -37,14 +37,14 @@ function showPopup(popup) {
         let t = $(`.${popup}`);
         if (t.length) {
             $('.popup-container').removeClass('d-none');
-            t.removeClass('d-none');
+            t.parent().removeClass('d-none');
         }
     }
 }
 
 function hidePopup() {
     $('.popup-container').addClass('d-none');
-    $('.popup-container .popup').addClass('d-none');
+    $('.popup-container .popup').parent().addClass('d-none');
 }
 
 function formatBytes(bytes) {

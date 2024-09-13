@@ -2,8 +2,8 @@
 
 $showNavToggle = true;
 require_once "config/autoload.php";
-
 require_once "includes/layout/head.php";
+echo "<script>const ISPASSKEYSET = '" . !empty($user_passkey) . "'</script>";
 
 ?>
 
@@ -72,8 +72,15 @@ require_once "includes/layout/head.php";
                             <!-- General/All Files Section -->
                             <div class="card border-0 rounded-4" style="overflow: hidden;">
                                 <div class="card-header bg-white py-3 px-4">
-                                    <i class="fa-solid fa-folder-open icon-normal"></i>
-                                    <span class="ms-2 fw-bold">My Files</span>
+                                    <div class="d-flex ycenter">
+                                        <div class="me-auto">
+                                            <i class="fa-solid fa-folder-open icon-normal"></i>
+                                            <span class="ms-2 fw-bold">My Files</span>
+                                        </div>
+                                        <button class="btn btn-rounded bg-light btn-check-all">
+                                            <i class="fa-solid fa-check-double prime-color"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="card-body all-files-body p-4">
                                     <?php include "includes/bs5loader.php" ?>
@@ -86,27 +93,27 @@ require_once "includes/layout/head.php";
         </div>
 
         <!-- file options menu -->
-        <div class="menu-list position-fixed shadow rounded-3 overflow-hidden bg-white p-2">
+        <div class="menu-list position-fixed shadow rounded-4 overflow-hidden bg-white p-3">
             <ul class="list-group d-flex flex-column gap-1">
-                <li class="list-group-item border-0 rounded-5 active">
+                <li class="list-group-item border-0 rounded-5 active" data-action="delete">
                     <div class="d-flex ycenter gap-2">
                         <i class="fa-solid fa-trash icon-normal"></i>
                         <span>Delete file</span>
                     </div>
                 </li>
-                <li class="list-group-item border-0 rounded-5">
+                <li class="list-group-item border-0 rounded-5" data-action="edit">
                     <div class="d-flex ycenter gap-2">
                         <i class="fa-solid fa-file-pen icon-normal"></i>
                         <span>Edit file</span>
                     </div>
                 </li>
-                <li class="list-group-item border-0 rounded-5">
+                <li class="list-group-item border-0 rounded-5" data-action="share">
                     <div class="d-flex ycenter gap-2">
                         <i class="fa-solid fa-share icon-normal"></i>
                         <span>Share file</span>
                     </div>
                 </li>
-                <li class="list-group-item border-0 rounded-5">
+                <li class="list-group-item border-0 rounded-5" data-action="hide">
                     <div class="d-flex ycenter gap-2">
                         <i class="fa-solid fa-lock icon-normal"></i>
                         <span>Hide file</span>
@@ -120,6 +127,7 @@ require_once "includes/layout/head.php";
     <!-- SCRIPTS -->
     <script src="js/config/config.js"></script>
     <script src="js/loader.js"></script>
+    <script src="js/popup.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/file/functions.js"></script>
     <script src="js/menu.js"></script>

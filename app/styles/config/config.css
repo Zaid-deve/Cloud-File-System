@@ -187,13 +187,10 @@ p {
 
 .form-control {
     box-shadow: none !important;
-    background: transparent;
+    background: var(--color--light);
     font-weight: 600;
     transform: all .2s ease;
-}
-
-.form-control:not(:disabled) {
-    border: 2px dotted var(--color--dark);
+    border: none;
 }
 
 .form-control.lg {
@@ -201,6 +198,7 @@ p {
 }
 
 .form-control:focus {
+    background: var(--color--light);
     border-color: var(--color--primary);
 }
 /* animaton classes */

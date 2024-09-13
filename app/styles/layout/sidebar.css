@@ -5,6 +5,7 @@
 .sidebar-list .list-group-item {
     border-radius: 12px;
     margin-top: 4px;
+    border: none !important;
 }
 
 .sidebar-list .list-group-item a :where(i, span) {
@@ -16,11 +17,11 @@
 }
 
 .sidebar-list .list-group-item:is(:hover, .active) {
-    background: var(--color--light);
+    background: #f1f0f0;
 }
 
 .sidebar-list .list-group-item:is(:hover, .active) a :where(i, span) {
-    color: var(--color--primary);
+    color: var(--color--secondary);
 }
 
 .sidebar-wrapper {

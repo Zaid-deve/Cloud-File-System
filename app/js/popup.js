@@ -1,8 +1,8 @@
 $(function(){
     $(".popup-container").click(function(e){
-        let t = $(e.target).closest('.popup-box')
+        let t = $(e.target).closest('.popup');
         if(!t.length){
-            hidePopup()
+            hidePopup();
         }
     })
 

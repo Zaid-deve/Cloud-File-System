@@ -1,6 +1,7 @@
-body{
+body {
     background: #fafafa;
 }
+
 .content-wrapper {
     overflow: auto;
 }
@@ -14,7 +15,7 @@ body{
     border-bottom: 1px solid var(--color--light);
 }
 
-.file-wrapper .file-title{
+.file-wrapper .file-title {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -22,16 +23,20 @@ body{
     width: 100%;
 }
 
-.file-wrapper-icon .file-icon{
+.file-sel-body.checked {
+    background: var(--color--light--30);
+}
+
+.file-wrapper-icon .file-icon {
     font-size: clamp(4rem, 30vw, 5.5rem);
 }
 
-.recent-files-container .file-wrapper{
+.recent-files-container .file-wrapper {
     max-width: 240px;
     flex-shrink: 0;
 }
 
-.menu-list{
+.menu-list {
     z-index: 999;
     max-width: 260px;
     width: 100%;
@@ -41,28 +46,33 @@ body{
     transform: scale(0);
 }
 
-.menu-list.show{
+.menu-list.show {
     visibility: visible;
     transform: scale(1);
 }
 
-.menu-list .list-group-item{
+.menu-list .list-group-item {
     padding: 14px 16px;
     cursor: pointer;
 }
 
-.menu-list .list-group-item i{
+.menu-list .list-group-item i {
     color: #585a6e;
 }
-.menu-list .list-group-item span{
+
+.menu-list .list-group-item span {
     font-weight: 600;
     color: #585a6e;
 }
 
-.menu-list .list-group-item:is(:hover,.active){
+.menu-list .list-group-item:is(:hover, .active) {
     background: var(--color--light);
 }
 
-.menu-list .list-group-item:is(:hover,.active) *{
+.menu-list .list-group-item:is(:hover, .active) * {
     color: var(--color--primary);
+}
+
+#file-search-inp{
+    background: transparent !important;
 }

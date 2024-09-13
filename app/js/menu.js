@@ -48,7 +48,80 @@ $(function () {
         }
     })
 
-
     // menu events
-    
+    $(".menu-list .list-group-item").click(function () {
+        let action = $(this).data('action');
+        if (action) {
+            hideMenu();
+            togglePopup(action);
+        }
+    })
+
+    function togglePopup(action) {
+        let t = __Checked.size > 0 ? __Checked : fileId;
+        if (action === 'delete') {
+            showDeletePopup(t);
+            return;
+        }
+
+        if (action === 'edit') {
+            showEditFile(fileId);
+            return;
+        }
+
+        if (action === 'hide') {
+            showPasskeyPopup(t);
+            return;
+        }
+    }
+
+
+    // popup listeners 
+    function showDeletePopup(data) {
+        if (data) {
+            showPopup('popup-delete');
+            let totalFiles = 1,
+                totalSize = 0;
+
+            if (data instanceof Set) {
+                if (data.size) {
+                    totalSize = getTotalSize(data);
+                    totalFiles = data.size;
+                }
+            } else {
+                totalSize = getTotalSize(fileId);
+            }
+
+            if (totalSize) {
+                totalSize = formatBytes(totalSize);
+            }
+
+            $(".delete-ins").html(`<p>${totalFiles} files will be deleted</p><p>${totalSize} will be free from space</p><p>this action cannot be undone.<br>do it in your own risk</p>`)
+            return;
+        }
+
+        showErr('the file is already deleted or is deleting in background...');
+    }
+
+    function showEditFile(fileId) {
+        if (fileId) {
+            let file = __Files.find(f => f.id == fileId);
+            if (file) {
+                showPopup('popup-edit');
+                $("#edit-filename").val(file.name).focus()[0];
+                return;
+            }
+        }
+
+        showErr('the file is deleted or is proccessing in background...');
+    }
+
+    function showPasskeyPopup(data) {
+        if(data){
+            if(!ISPASSKEYSET){
+                showPopup('popup-set-passkey');
+                return;
+            }
+        }
+    }
 })

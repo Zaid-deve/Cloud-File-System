@@ -5,4 +5,5 @@ const origin = location.origin,
 
 // files
 const MaxFileUploadSize = (1024 * 1024 * 50)
-let __Files = [];
+let __Files = [],
+    __Checked = new Set();

@@ -98,3 +98,17 @@ function searchFiles(files, qry) {
         return __Files.filter(f => f.name.includes(qry) || f.type == qry);
     }
 }
+
+function getTotalSize(data) {
+    let totalSize = 0,
+        fileIds = data instanceof Set ? data : [data];
+
+    fileIds.forEach(fileId => {
+        let file = __Files.find(f => f.id === fileId);
+        if (file && file.size) {
+            totalSize += file.size;
+        }
+    });
+
+    return totalSize;
+}
