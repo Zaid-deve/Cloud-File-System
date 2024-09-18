@@ -13,13 +13,20 @@ $(function () {
     try {
 
         // fetch files
-        fetchFiles({ success: prepareFiles, error: displayFetchErr });
+        if (currPage == 'share.php') {
+            fetchSharedFiles(getParam("data"), { success: prepareFiles, error: displayFetchErr })
+        } else {
+            fetchFiles({ success: prepareFiles, error: displayFetchErr });
+        }
 
 
         // to preapre files
         function prepareFiles(files) {
             if (files && Array.isArray(files)) {
                 __Files = files;
+                if(currPage=='share.php'){
+                    $(".shared-files-count").text(`Shared ${files.length} Files To You.`)
+                }
                 if (files.length == 0) {
                     recentFilesContainer.hide();
                     allFilesBody.html(`<div class="p-4 text-center">
@@ -46,9 +53,13 @@ $(function () {
         displayFiles = function (files) {
             if (files) {
                 let output = `<div class="row row-gap-4">`,
-                    recentOutput = '';
+                    recentOutput = '',
+                    isRecentFile;
+
+
                 files.forEach(f => {
-                    let wrapper = `<div class="file-wrapper rounded-4 overflow-hidden border border-1" data-fileid="${f.id}"'>
+                    isRecentFile = isRecent(Date.parse(f.recent));
+                    let wrapper = `<div class="file-wrapper rounded-4 overflow-hidden border border-1" data-fileid="${f.id}" data-source="${isRecentFile ? 0 : 1}">
                                        <div class="file-wrapper-prev d-flex flex-center position-relative">
                                            <div class="file-wrapper-icon">
                                                <i class="fa-solid fa-file file-icon"></i>
@@ -68,16 +79,15 @@ $(function () {
                                    </div>`
 
                     // display if its an recent file
-                    if (f.recent) {
-                        if (isRecent(Date.parse(f.recent))) {
-                            recentOutput += wrapper;
-                        }
+                    if (isRecentFile) {
+                        recentOutput += wrapper;
                     }
 
                     output += `<div class="col-md-6 col-lg-4">
-                                   ${wrapper}
+                                ${wrapper}
                                </div>`;
                 })
+
 
                 if (recentOutput) {
                     recentFilesBody.html(`<div class="d-flex gap-4 overflow-scroll">${recentOutput}</div>`)
@@ -90,6 +100,8 @@ $(function () {
                 output + '</div>'
                 allFilesBody.html(output);
             }
+
+            fillContainers();
         }
 
         // check if file is recent
@@ -102,7 +114,7 @@ $(function () {
 
         // select all files
         checkAllBtn.click(function () {
-            if(__Files.length !== __Checked.size) checkStrict = true;
+            if (__Files.length !== __Checked.size) checkStrict = true;
             $(".file-wrapper .file-sel-body").click();
             checkStrict = false;
         })

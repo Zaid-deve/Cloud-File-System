@@ -43,8 +43,13 @@ function showPopup(popup) {
 }
 
 function hidePopup() {
+    let t = $('.popup-container .popup');
+    if (t.hasClass('working')) {
+        return;
+    }
+
     $('.popup-container').addClass('d-none');
-    $('.popup-container .popup').parent().addClass('d-none');
+    t.parent().addClass('d-none');
 }
 
 function formatBytes(bytes) {
@@ -56,4 +61,66 @@ function formatBytes(bytes) {
         value = parseFloat((bytes / Math.pow(k, i)).toFixed(2));
 
     return `${value} ${units[i]}`;
+}
+
+function fillContainers() {
+    if (!$('.recent-files-body .file-wrapper').length) {
+        $('.recent-files-body').hide();
+    }
+
+    if (!$('.all-files-body .file-wrapper').length) {
+        $('.all-files-body').html(`<div class="p-4 text-center">
+                                           <img src="images/nofiles (2).png" alt="#" height="180" class="img-contain mx-auto">
+                                           <h3 class="mt-3">No Files Yet !</h3>
+                                           <small>It looks like you dont have files to show heare, <br> start uploading files end-to-end encrypted</small>
+                                           <div class="d-flex flex-center">
+                                               <a href="upload/upload.php" class="btn bg-prime-color px-4 rounded-5 mt-3 has-icon">
+                                                   <i class="fa-solid fa-upload"></i>
+                                                   <span>Upload Files</span>
+                                               </a>
+                                           </div>
+                                       </div>`);
+    }
+
+    if (!__Files.length) {
+        $('.btn-check-all').hide();
+    }
+}
+
+
+function removeWrapper(data) {
+    if (data) {
+        if (typeof data === 'string') {
+            data = [data];
+        }
+        else {
+            data = Array.from(data);
+        }
+
+        data.forEach(f => {
+            let t = $(`[data-fileid="${f}"]`)
+            if (t.length) {
+                if (t.data('source') == '1') {
+                    t.parent().fadeOut(200, () => {
+                        t.parent().remove();
+                        fillContainers();
+                    });
+                }
+                else {
+                    t.fadeOut(200, () => t.remove());
+                    fillContainers();
+                }
+            }
+        })
+    }
+}
+
+
+function getWrapper(fileId) {
+    return $(`[data-fileid="${fileId}"]`);
+}
+
+function getParam(param){
+    let us = new URLSearchParams(location.search);
+    return us.get(param);
 }

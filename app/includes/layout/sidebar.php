@@ -10,38 +10,33 @@
                     <small class="text-muted"><?php echo $user_join_date ?? '---' ?></small>
                 </div>
                 <div class="ms-auto">
-                    <a href="/cfs/app/user/logout.php" class="btn pe-0">
-                        <i class="fa-solid fa-person-walking-arrow-right icon-md text-dark"></i>
-                        <!-- <i class="fa-solid fa-power-off "></i> -->
+                    <a href="/cfs/app/user/logout.php" class="btn btn-rounded bg-light-color has-icon pe-0">
+                        <i class="fa-solid fa-angle-right icon-def prime-color"></i>
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="px-4">
-        <hr>
-    </div>
-
-    <div class="sidebar-list p-3 pt-0">
+    <div class="sidebar-list p-3 pt-0 mt-3">
         <ul class="list-group">
             <li class="list-group-item border-0 p-0 active">
                 <a href="#" class="d-flex y-center gap-2 p-3 text-muted">
-                    <i class="fa-solid fa-house-crack"></i>
+                    <i class="fa-solid fa-house"></i>
                     <span>Home</span>
                 </a>
             </li>
 
             <li class="list-group-item border-0 p-0">
                 <a href="#" class="d-flex y-center gap-2 p-3 text-muted">
-                    <i class="fa-solid fa-file-shield"></i>
+                    <i class="fa-solid fa-lock"></i>
                     <span>Hidden Space</span>
                 </a>
             </li>
 
             <li class="list-group-item border-0 p-0">
                 <a href="#" class="d-flex y-center gap-2 p-3 text-muted">
-                    <i class="fa-solid fa-gears"></i>
+                    <i class="fa-solid fa-gear"></i>
                     <span>Settings</span>
                 </a>
             </li>

@@ -30,7 +30,7 @@ try {
         // auth user
         $user = new User();
 
-        $userId = User::fetchUser($db, "facebook", $email, ['user_id'])['user_id'];
+        $userId = User::fetchUser($db, "facebook", $email, ['user_id']);
         if ($userId) {
             $user->setUserId($userId, "facebook");
         } else {

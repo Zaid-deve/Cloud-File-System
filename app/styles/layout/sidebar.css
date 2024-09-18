@@ -9,7 +9,7 @@
 }
 
 .sidebar-list .list-group-item a :where(i, span) {
-    font-weight: 550 !important;
+    font-weight: 700 !important;
 }
 
 .sidebar-list .list-group-item a :where(i) {

@@ -9,9 +9,10 @@ $authType = $user->getAuthType();
 if (!isset($isAuthNotRequired)) {
     if (!$uid) {
         header("Location:$baseurl/app/user/auth/signin.php");
-        die("An error occured !");
+        $resp['Err'] = 'LOGIN_ERR';
+        die($resp);
     } else {
-        $data = $user::fetchUser($db, $authType, $uid, ['user_email', 'user_profile', 'user_name', 'user_timestamp','user_pass_key']);
+        $data = $user::fetchUser($db, $authType, $uid, ['user_email', 'user_profile', 'user_name', 'user_timestamp', 'user_pass_key']);
         if ($data) {
             $user_email = $data['user_email'];
             $user_profile = $data['user_profile'];

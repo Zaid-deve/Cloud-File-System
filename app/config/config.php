@@ -21,3 +21,8 @@ $resp = [
     'Success' => false,
     'Err' => null
 ];
+
+
+// jwt endcoding key
+putenv('JwtKey=$2y$10$ItWvhcFGMnkfs.oUc3GmgusxrhragftYEjDM2cixmIUu0Q.t8914K');
+putenv("JwtIdentifier=cfsidf001");

@@ -19,7 +19,7 @@ $(function () {
                     displayFiles(files);
                 } else {
                     $(".all-files-body").html(`<div class="p-4 text-center">
-                                                    <img src="images/cute-monkey-vector-illustration_543090-186-removebg-preview.png" alt="#" height="180" class="img-contain mx-auto">
+                                                    <img src="${baseurl}/app/images/cute-monkey-vector-illustration_543090-186-removebg-preview.png" alt="404" height="180" class="img-contain mx-auto">
                                                     <h3 class="mt-3 text-muted">Nothing Found !</h3>
                                                     <small>Looks like theres nothing for ${qry.slice(0, 30)}...</small>
                                                     <div class="d-flex flex-center">

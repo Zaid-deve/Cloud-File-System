@@ -1,20 +1,20 @@
-$(function(){
-    $(".popup-container").click(function(e){
+$(function () {
+    $(".popup-container").click(function (e) {
         let t = $(e.target).closest('.popup');
-        if(!t.length){
+        if (!t.length) {
             hidePopup();
         }
     })
 
     $('#profileimg').change(e => {
         const file = e.target.files[0]
-        if(file){
-            if(!isImg(file)){
+        if (file) {
+            if (!isImg(file)) {
                 showErr('Profile image should be an valid image');
                 return;
             }
 
-            if(file.size > (1024 * 1024 * 2)){
+            if (file.size > (1024 * 1024 * 2)) {
                 showErr('Profile image should be of maximum 2 mb');
                 return;
             }
@@ -24,7 +24,124 @@ $(function(){
         }
     })
 
-    $(".btn-update-profile").click(function(){
+    $(".btn-update-profile").click(function () {
         showErr('Service unavailable at a movement');
+    })
+
+
+    // menu listeners
+    $("#passkey-inp").on('input', function () {
+        $("#btn-setpasskey").prop('disabled', !($(this).val().length >= 6 && $(this).val().length <= 24));
+    })
+
+    $("#btn-setpasskey").click(async function () {
+        $("#passkey-inp").prop('disabled', true);
+        $.post(`${baseurl}/app/user/setpasskey.php`, { passkey: $("#passkey-inp").val().trim() }, function (r) {
+            const resp = JSON.parse(r);
+            if (resp.Success) {
+                location.reload();
+                return;
+            }
+
+            $("#passkey-inp").next().text(resp.Err || "Failed to set passkey");
+            $("#passkey-inp").prop('disabled', false);
+        })
+    })
+
+    /**
+     * Edit File 
+     */
+
+    function isValidFilename(name) {
+        return name && !name.match(/[\/\\:*?"<>|]/)
+    }
+
+    let filename = $("#edit-filename"),
+        filenameErr = filename.next(),
+        viewPerm = $('#view-permission'),
+        editPerm = $('#edit-permission'),
+        editBtn = $('#btn-update-file')
+
+    $('#view-permission, #edit-permission').change(() => {
+        if (isValidFilename(filename.val())) {
+            editBtn.prop('disabled', false);
+        }
+    })
+
+    filename.change(() => {
+        editBtn.prop('disabled', !isValidFilename(filename.val()));
+    })
+
+    editBtn.click(() => {
+        if (!isValidFilename(filename.val())) {
+            filenameErr.text("invalid file name");
+        } else {
+            // disabled inputs
+            filenameErr.text('');
+            editBtn.addClass('working')
+            $('.popup-eidt').addClass('working');
+            [filename, viewPerm, editPerm, editBtn].forEach((i, e) => e.disabled = true);
+
+            // perms
+            let [r, w] = [viewPerm[0].checked, editPerm[0].checked];
+
+            updateFile({ filename: filename.val(), r, w, fileId: CURRENT_TARGET_ID }, function (resp) {
+                editBtn.removeClass('working')
+                $('.popup-eidt').removeClass('working');
+                [filename, viewPerm, editPerm, editBtn].forEach((i, e) => e.disabled = false);
+
+                if (resp.Success) {
+                    hidePopup();
+                    let wrapper = getWrapper(CURRENT_TARGET_ID);
+                    if (wrapper.length) {
+                        wrapper.find('.file-title').text(filename.val());
+                        let file = getFile(CURRENT_TARGET_ID);
+                        if (file) {
+                            file.name = filename.val();
+                            file.read = r
+                            file.write = w
+                        }
+                    }
+                    return;
+                }
+
+                showErr(resp.Err || 'Failed to edit file !');
+            });
+        }
+    })
+
+
+
+    /**
+     * delete file
+     */
+
+    let deleteBtn = $('#btn-confirm-delete');
+    deleteBtn.click(() => {
+        let t;
+        if (__Checked.size) {
+            t = Array.from(__Checked)
+        } else {
+            t = CURRENT_TARGET_ID
+        }
+
+        if (t) {
+            $('.popup-delete').addClass('working')
+            deleteBtn.addClass('working').prop('disabled', true);
+
+            deleteFile(t, function (resp) {
+                $('.popup-delete').removeClass('working')
+                deleteBtn.removeClass('working').prop('disabled', false);
+
+                if (resp.Success) {
+                    hidePopup();
+                    removeFile(t);
+                    removeWrapper(t);
+                    return;
+                }
+
+                showErr(resp.Err || "Failed to delete file");
+            })
+        }
     })
 });

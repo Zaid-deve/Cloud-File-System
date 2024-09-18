@@ -47,7 +47,7 @@ if (isset($_GET['code'])) {
         // auth user
         $user = new User();
 
-        $userId = User::fetchUser($db, "google", $email, ['user_id'])['user_id'];
+        $userId = User::fetchUser($db, "google", $email, ['user_id']);
         if ($userId) {
             $user->setUserId($userId, "google");
         } else {
