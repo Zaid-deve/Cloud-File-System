@@ -49,6 +49,10 @@ class Db
         return $this->conn->lastInsertId();
     }
 
+    function getStatement(){
+        return $this->stmt;
+    }
+
     public function getErr()
     {
         return $this->conn->errorInfo()['1'];

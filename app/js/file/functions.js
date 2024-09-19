@@ -68,50 +68,34 @@ async function addFileMetaData(file, fileId, callback) {
 // to fetch files
 
 function fetchFiles(options) {
-    let data = { filter: options?.filter ?? null, passKey: options?.passKey ?? null };
+    let data = { fileType: 'public' };
 
-    try {
-        $.post(`${baseurl}/app/php/b2/fetchFiles.php`, data, function (resp) {
+    if (options.fileType == 'private') {
+        if (!options.passKey) {
+            options?.error("Invalid passkey, please enter passkey");
+            return;
+        } else {
+            data.passKey = options.passKey;
+            data.fileType = 'private';
+        }
+    }
+
+    $.post(`${baseurl}/app/php/b2/fetchFiles.php`, data, function (resp) {
+        try {
             const r = JSON.parse(resp);
             if (r.Success) {
-                let files = r.Files;
-                if (!Array.isArray(files)) {
-                    files = [files];
-                }
-
-                options?.success(files)
+                options?.success(r.Files);
             } else {
                 throw new Error(r.Err);
             }
-        }).fail(() => { throw new Err('Network Error') })
-    } catch (e) {
-        if (options?.error) {
-            options.error(e || 'Fetching Files Failed !');
-        } else {
-            showErr(e || 'Fetching Files Failed !');
+        } catch (e) {
+            if (typeof options.error == 'function') {
+                options.error(e.message);
+            }
         }
-    }
-}
-
-function fetchSharedFiles(data, options) {
-    if (data) {
-        try {
-            $.post(`${baseurl}/app/php/file/fetchSharedFiles.php`, { data },  function(resp){
-                const r = JSON.parse(resp);
-                if(r.Success && r.Files){
-                    options?.success(r.Files);
-                    return;
-                }
-                throw new Error();
-            })
-        } catch (e){
-            options?.error(e || 'Cannot fetch files !');
-        }
-        return;
-    }
-
-    showErr('Something Went Wrong');
-    options?.error();
+    }).fail(() => {
+        if (typeof options.error == 'function') options.error("Something Went Wrong !");
+    });
 }
 
 function searchFiles(files, qry) {
@@ -166,26 +150,52 @@ function isSet(data) {
  */
 
 
-function hideFile(data) {
+function toggleHideFile(data, action) {
     if (data) {
         let postData,
             filesCount = 1;
 
-        if (isSet(data)) postData = Array.from(data)
-        else postData = [data];
+        if (isSet(data)) {
+            postData = Array.from(data);
+        } else {
+            postData = [data];
+        }
+
+        let formData = {
+            data: JSON.stringify(postData),
+            action: action
+        };
+
+        // Handle unhide action with passkey
+        if (action === 'unhide') {
+            if (!CURRENT_USER_PASSKEY) {
+                hidePopup();
+                showErr('Something Went Wrong !');
+                return;
+            }
+            formData.passkey = CURRENT_USER_PASSKEY;
+        }
 
         filesCount = postData.length;
 
-        $.post(`${baseurl}/app/php/file/hideFile.php`, { data: JSON.stringify(postData) }, function (resp) {
-            const r = JSON.parse(resp);
-            if (r.Success) {
-                removeFile(data);
-                removeWrapper(data)
-                showMsg(`${filesCount} hidden succesfully`, 'success');
-                return;
+        // Use $.post to send data
+        $.post(`${baseurl}/app/php/file/toggleHideFile.php`, formData, function (resp) {
+            try {
+                const r = JSON.parse(resp);
+                if (r.Success) {
+                    postData.forEach(file => {
+                        removeFile(file);
+                        removeWrapper(file)
+                    });
+                    showMsg(`${filesCount} file(s) ${action == 'hide' ? 'hidden' : 'un hidden'} successfully`, 'success');
+                } else {
+                    showErr(r.Err || 'Something Went Wrong !');
+                }
+            } catch (e) {
+                showErr('Something Went Wrong');
             }
-
-            showErr(r.Err || 'Something Went Wrong !');
+        }).fail(function () {
+            showErr('Something Went Wrong with the request!');
         });
     }
 }

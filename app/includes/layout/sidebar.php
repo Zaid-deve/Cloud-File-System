@@ -21,28 +21,28 @@
     <div class="sidebar-list p-3 pt-0 mt-3">
         <ul class="list-group">
             <li class="list-group-item border-0 p-0 active">
-                <a href="#" class="d-flex y-center gap-2 p-3 text-muted">
+                <a href="/cfs/app" class="d-flex y-center gap-2 p-3 text-muted">
                     <i class="fa-solid fa-house"></i>
                     <span>Home</span>
                 </a>
             </li>
 
             <li class="list-group-item border-0 p-0">
-                <a href="#" class="d-flex y-center gap-2 p-3 text-muted">
+                <a href="/cfs/app/view/safe.php" class="d-flex y-center gap-2 p-3 text-muted">
                     <i class="fa-solid fa-lock"></i>
                     <span>Hidden Space</span>
                 </a>
             </li>
 
             <li class="list-group-item border-0 p-0">
-                <a href="#" class="d-flex y-center gap-2 p-3 text-muted">
+                <a href="/cfs/app/settings.php" class="d-flex y-center gap-2 p-3 text-muted">
                     <i class="fa-solid fa-gear"></i>
                     <span>Settings</span>
                 </a>
             </li>
 
             <li class="list-group-item border-0 p-0">
-                <a href="#" class="d-flex y-center gap-2 p-3 text-muted">
+                <a href="/cfs/app/support.php" class="d-flex y-center gap-2 p-3 text-muted">
                     <i class="fa-solid fa-headset"></i>
                     <span>Customer Support</span>
                 </a>

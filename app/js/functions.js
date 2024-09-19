@@ -70,11 +70,11 @@ function fillContainers() {
 
     if (!$('.all-files-body .file-wrapper').length) {
         $('.all-files-body').html(`<div class="p-4 text-center">
-                                           <img src="images/nofiles (2).png" alt="#" height="180" class="img-contain mx-auto">
+                                           <img src="/cfs/app/images/nofiles (2).png" alt="#" height="180" class="img-contain mx-auto">
                                            <h3 class="mt-3">No Files Yet !</h3>
                                            <small>It looks like you dont have files to show heare, <br> start uploading files end-to-end encrypted</small>
                                            <div class="d-flex flex-center">
-                                               <a href="upload/upload.php" class="btn bg-prime-color px-4 rounded-5 mt-3 has-icon">
+                                               <a href="/cfs/app/upload/upload.php" class="btn bg-prime-color px-4 rounded-5 mt-3 has-icon">
                                                    <i class="fa-solid fa-upload"></i>
                                                    <span>Upload Files</span>
                                                </a>

@@ -67,8 +67,8 @@ $(function () {
             return;
         }
 
-        if (action === 'hide') {
-            showPasskeyPopup(t);
+        if (action === 'hide' || action === 'unhide') {
+            showPasskeyPopup(t, action);
             return;
         }
 
@@ -118,13 +118,13 @@ $(function () {
         showErr('the file is deleted or is proccessing in background...');
     }
 
-    function showPasskeyPopup(data) {
+    function showPasskeyPopup(data,action) {
         if (data) {
             if (!ISPASSKEYSET) {
                 showPopup('popup-set-passkey');
                 return;
             } else {
-                hideFile(data);
+                toggleHideFile(data, action);
             }
         }
     }

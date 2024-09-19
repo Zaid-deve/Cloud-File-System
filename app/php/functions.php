@@ -29,3 +29,12 @@ function getDiff($timestamp)
         }
     }
 }
+
+function getFilesMeta(Db $conn, $uid, $isReqHidden = false){
+    if($uid){
+        $stmt = $conn->qry("SELECT file_name name, file_id id,file_size size, file_type type, file_perms perms, file_uploader_id uploader, file_last_viewed recent FROM file_uploads WHERE file_uploader_id = ? AND file_visibility = ?", [$uid, intval($isReqHidden)]);
+        return $stmt;
+    }
+
+    return false;
+}

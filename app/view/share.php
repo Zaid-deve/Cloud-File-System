@@ -87,22 +87,12 @@ if ($shareType === 'file') {
         </div>
 
         <!-- file options menu -->
-        <div class="menu-list position-fixed shadow rounded-4 overflow-hidden bg-white p-3">
-            <ul class="list-group d-flex flex-column gap-1">
-                <li class="list-group-item border-0 rounded-5" data-action="edit">
-                    <div class="d-flex ycenter gap-2">
-                        <i class="fa-solid fa-file-pen icon-normal"></i>
-                        <span>Edit file</span>
-                    </div>
-                </li>
-                <li class="list-group-item border-0 rounded-5" data-action="share">
-                    <div class="d-flex ycenter gap-2">
-                        <i class="fa-solid fa-share icon-normal"></i>
-                        <span>Share file</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        <?php 
+        
+        $hideDeleteOption = $hideHideOption = true;
+        require_once "../includes/layout/menu.php";
+        
+        ?>
     </div>
 
 

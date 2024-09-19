@@ -161,6 +161,31 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Enter Passkey Popup -->
+            <div class="col-md-8 col-lg-6 col-xl-5 popup-box d-none">
+                <div class="card border-0 popup popup-enter-passkey bg-white rounded-4 overflow-hidden shadow">
+                    <div class="card-header py-3 px-4 bg-white">
+                        <h3 class="m-0">Enter Passkey</h3>
+                        <small>Please enter your passkey to view private files</small>
+                    </div>
+                    <div class="card-body px-4 py-3">
+                        <div class="mt-3">
+                            <label for="enter-passkey-inp" class="fw-bold">Passkey:</label>
+                            <input type="text" id="enter-passkey-inp" placeholder="Enter pass key" class="form-control mt-2 mb-1 lg">
+                            <small class="danger-color"></small>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+                            <button class="btn bg-prime-color has-icon px-4 w-50 gap-3 rounded-5 btn-confirm-passkey">
+                                <i class="fa-solid fa-lock"></i>
+                                <span class="fw-bold">Confirm</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

@@ -145,3 +145,23 @@ $(function () {
         }
     })
 });
+
+
+function requestPasskey() {
+    return new Promise((res, rej) => {
+        showPopup('popup-enter-passkey')
+        $('.popup-enter-passkey').addClass('working');
+        $('#enter-passkey-inp').focus();
+        $('.btn-confirm-passkey').click(function () {
+            let k = $('#enter-passkey-inp').val();
+            if (k && (k.length >= 6 && k.length <= 24)) {
+                $('.popup-enter-passkey').removeClass('working');
+                hidePopup()
+                $('#enter-passkey-inp').next().text('');
+                res(k);
+            } else {
+                $('#enter-passkey-inp').next().text('Invalid passkey');
+            }
+        })
+    })
+}

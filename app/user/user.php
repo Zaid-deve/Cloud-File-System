@@ -67,4 +67,17 @@ class User
         setcookie("user_id", "null", time() - 1, "/");
         setcookie("auth_type", "null", time() - 1, "/");
     }
+
+    static function isValidPasskey($passkey)
+    {
+        return preg_match("/[*]{6,24}/", $passkey);
+    }
+
+    static function getUserPassKey($conn, $authType, $uid)
+    {
+        $stmt = $conn->qry("SELECT user_pass_key FROM {$authType}_users WHERE user_id = ?", [$uid]);
+        if ($stmt) {
+            return $stmt;
+        }
+    }
 }
