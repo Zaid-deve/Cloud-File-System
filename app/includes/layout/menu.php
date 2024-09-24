@@ -12,17 +12,24 @@
         <li class="list-group-item border-0 rounded-5" data-action="edit">
             <div class="d-flex ycenter gap-2">
                 <i class="fa-solid fa-file-pen icon-normal"></i>
-                <span>Edit file</span>
+                <span>Rename File</span>
             </div>
         </li>
 
-        <?php if(!isset($hideShareOption)) { ?>
-        <li class="list-group-item border-0 rounded-5" data-action="share">
+        <li class="list-group-item border-0 rounded-5" data-action="download">
             <div class="d-flex ycenter gap-2">
-                <i class="fa-solid fa-share icon-normal"></i>
-                <span>Share file</span>
+                <i class="fa-solid fa-file-arrow-down icon-normal"></i>
+                <span>Download</span>
             </div>
         </li>
+
+        <?php if (!isset($hideShareOption)) { ?>
+            <li class="list-group-item border-0 rounded-5" data-action="share">
+                <div class="d-flex ycenter gap-2">
+                    <i class="fa-solid fa-share icon-normal"></i>
+                    <span>Share file</span>
+                </div>
+            </li>
         <?php } ?>
 
         <?php if (!isset($hideHideOption)) { ?>

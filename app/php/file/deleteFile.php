@@ -3,67 +3,47 @@
 require_once "../../config/autoload.php";
 require_once "../b2/b2file.php";
 
-function deleteFile(B2File $b2, Db $db, $uid, $fileId)
-{
-    $uploader = $db->qry("SELECT file_uploader_id FROM file_uploads WHERE file_id = ?", [$fileId]);
-    if ($uploader) {
-        if ($uploader != $uid) {
-            return;
-        }
-    } else {
-        return;
-    }
-
-    $r = $b2->deleteFile([
-        'BucketId' => $b2->getCurrentBucketId(),
-        'FileId' => $fileId
-    ]);
-
-    if ($r) {
-        $dr = $db->qry("DELETE FROM file_uploads WHERE file_id = ? AND file_uploader_id = ?", [$fileId, $uid]);
-    }
-
-    return $r && $dr;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    $data = $_POST['data'];
-
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $data = $_POST['data'] ?? null;
     if (!$data) {
-        $resp['Err'] = 'Missing File !';
-        die(json_encode($resp));
-    }
+        $resp['Err'] = "Something Went Wrong !";
+    } else {
 
-    $decData = json_decode($data, true);
+        $data = json_decode($data, true);
+        $errs = [];
 
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        $decData = htmlentities($data);
-    }
+        if (json_last_error() == JSON_ERROR_NONE) {
 
-    $delErrs = [];
-    $b2 = new B2File();
+            $files = is_array($data) ? $data : [$data];
+            $b2 = new B2File();
 
-    if (is_array($decData)) {
-        foreach ($decData as $f) {
-            if (!deleteFile($b2, $db, $uid, $f)) {
-                $delErrs[] = $f;
+            foreach ($files as $fileId) {
+                if ($fileId) {
+                    try {
+                        $isFileDeleted = $b2->delFile($fileId);
+                        if ($isFileDeleted) {
+                            delFileMeta($db, $authType, $uid, $fileId);
+                        }
+                    } catch (Exception $e) {
+                        if (strpos($e->getMessage(), "404")) {
+                            if (!delFileMeta($db, $authType, $uid, $fileId)) {
+                                $errs[] = $fileId;
+                            }
+                        } else {
+                            $errs[] = $fileId;
+                        }
+                    }
+                }
             }
-        }
-    } else {
-        if (!deleteFile($b2, $db, $uid, $decData)) {
-            $delErrs[] = $decData;
-        }
-    }
 
-    if (!empty($delErrs)) {
-        if (is_array($decData)) {
-            $resp['Err'] = "Some files may not have been deleted from server and not from records, i will be in some time.";
+            if (empty($errs)) {
+                $resp['Success'] = true;
+            } else {
+                $resp['Err'] = "Something Went Wrong, Some Files May Not Be Deleted Or Will Be Delete In Short Time !";
+            }
         } else {
-            $resp['Err'] = "Failed to delete file, please try again !";
+            $resp['Err'] = "Invalid File, Or The File Is Deleted !";
         }
-    } else {
-        $resp['Success'] = true;
     }
 }
 

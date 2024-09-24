@@ -184,7 +184,53 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
+
+
+            <!-- popup for downloading files -->
+            <div class="col-xl-10 popup-box d-none">
+                <div class="popup popup-download">
+                    <div class="card bg-white rounded-4 overflow-hidden">
+                        <div class="card-header bg-color-light">
+                            <h3 class="m-0">Download Manager</h3>
+                            <small>Track your download</small>
+                        </div>
+                        <div class="card-body py-3">
+                            <div class="d-flex px-3 py-2 rounded-4 border border-1 border-muted">
+                                <div class="flex-grow-1 text-muted">
+                                    <label class="fs-6">Downloads</label>
+                                    <div class="fs-4 total-downloads">----</div>
+                                </div>
+                                <div class="flex-grow-1 text-muted">
+                                    <label class="fs-6">Size</label>
+                                    <div class="fs-4 total-download-size">----</div>
+                                </div>
+                                <div class="flex-grow-1 text-muted">
+                                    <label class="fs-6">Estimated Time</label>
+                                    <div class="fs-4 total-download-time">----</div>
+                                </div>
+                            </div>
+
+                            <div class="mt-3 download-progress-container d-none overflow-auto" style="min-height: 200px;max-height:320px;">
+                                <div class="row row-gap-3"></div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer download-btns d-none">
+                            <div class="d-flex justify-content-end gap-3">
+                                <button class="btn btn-outline-muted border has-icon px-3 gap-3 rounded-3">
+                                    <i class="fa-solid fa-pause prime-color"></i>
+                                    <span class="fw-boldim prime-color">Pause All</span>
+                                </button>
+                                <button class="btn btn-danger has-icon px-3 gap-3 rounded-3">
+                                    <i class="fa-solid fa-ban"></i>
+                                    <span class="fw-bold">Cancel All</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

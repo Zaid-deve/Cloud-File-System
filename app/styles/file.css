@@ -1,0 +1,7 @@
+.file-prev-col {
+    min-height: 120px;
+}
+
+.file-icon{
+    font-size: clamp(60px, 40%, 100px);
+}

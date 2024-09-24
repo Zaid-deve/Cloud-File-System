@@ -26,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
             $sharedBy = $token->ShareBy;
             $authType = $token->AuthType;
-            $sharer = $db->qry("SELECT user_id, file_name name, file_size size, file_type type, file_id id FROM {$authType}_users u LEFT JOIN file_uploads ON file_uploader_id = u.user_id WHERE user_id = ?", [$sharedBy]);
-            if (!$sharer) {
+            $sharer = getFilesMeta($db, $authType, $sharedBy);
+            if ($sharer === false) {
                 throw new Exception('Invalid Sharing Link, please request the sender to generate again !');
             }
 

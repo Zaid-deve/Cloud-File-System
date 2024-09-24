@@ -3,7 +3,7 @@
         <div onclick="location.href = '/cfs/app/user/account.php'" class="account-block pt-3 px-4">
             <div class="d-flex ycenter gap-2">
                 <div class="profile-img">
-                    <img src="<?php echo $user_profile ?? "$baseurl/app/images/default.png" ?>" alt="#" class="img-cover rounded-circle is-profile" height="40">
+                    <img src="<?php echo $user_profile ?? "$baseurl/app/images/default.png" ?>" alt="#" class="img-cover rounded-circle is-profile bg-light-color" height="40">
                 </div>
                 <div class="profile-info">
                     <strong class="d-block"><?php echo $user_name ?? 'add name' ?></strong>
@@ -18,30 +18,35 @@
         </div>
     </div>
 
+    <?php
+    // Get current page filename
+    $current_page = basename($_SERVER['PHP_SELF']);
+    ?>
+
     <div class="sidebar-list p-3 pt-0 mt-3">
         <ul class="list-group">
-            <li class="list-group-item border-0 p-0 active">
+            <li class="list-group-item border-0 p-0 <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">
                 <a href="/cfs/app" class="d-flex y-center gap-2 p-3 text-muted">
                     <i class="fa-solid fa-house"></i>
                     <span>Home</span>
                 </a>
             </li>
 
-            <li class="list-group-item border-0 p-0">
+            <li class="list-group-item border-0 p-0 <?php echo ($current_page == 'safe.php') ? 'active' : ''; ?>">
                 <a href="/cfs/app/view/safe.php" class="d-flex y-center gap-2 p-3 text-muted">
                     <i class="fa-solid fa-lock"></i>
                     <span>Hidden Space</span>
                 </a>
             </li>
 
-            <li class="list-group-item border-0 p-0">
+            <li class="list-group-item border-0 p-0 <?php echo ($current_page == 'settings.php') ? 'active' : ''; ?>">
                 <a href="/cfs/app/settings.php" class="d-flex y-center gap-2 p-3 text-muted">
                     <i class="fa-solid fa-gear"></i>
                     <span>Settings</span>
                 </a>
             </li>
 
-            <li class="list-group-item border-0 p-0">
+            <li class="list-group-item border-0 p-0 <?php echo ($current_page == 'support.php') ? 'active' : ''; ?>">
                 <a href="/cfs/app/support.php" class="d-flex y-center gap-2 p-3 text-muted">
                     <i class="fa-solid fa-headset"></i>
                     <span>Customer Support</span>

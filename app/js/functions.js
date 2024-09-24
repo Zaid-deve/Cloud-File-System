@@ -63,22 +63,27 @@ function formatBytes(bytes) {
     return `${value} ${units[i]}`;
 }
 
-function fillContainers() {
+function fillContainers(includeUploadBtn = false) {
     if (!$('.recent-files-body .file-wrapper').length) {
         $('.recent-files-body').hide();
     }
 
     if (!$('.all-files-body .file-wrapper').length) {
+        let op = "";
+        if (includeUploadBtn) {
+            op = `<small>It looks like you dont have files to show heare, <br> start uploading files end-to-end encrypted</small>
+                    <div class="d-flex flex-center">
+                        <a href="/cfs/app/upload/upload.php" class="btn bg-prime-color px-4 rounded-5 mt-3 has-icon">
+                            <i class="fa-solid fa-upload"></i>
+                            <span>Upload Files</span>
+                        </a>
+                    </div>`;
+        }
+
         $('.all-files-body').html(`<div class="p-4 text-center">
                                            <img src="/cfs/app/images/nofiles (2).png" alt="#" height="180" class="img-contain mx-auto">
                                            <h3 class="mt-3">No Files Yet !</h3>
-                                           <small>It looks like you dont have files to show heare, <br> start uploading files end-to-end encrypted</small>
-                                           <div class="d-flex flex-center">
-                                               <a href="/cfs/app/upload/upload.php" class="btn bg-prime-color px-4 rounded-5 mt-3 has-icon">
-                                                   <i class="fa-solid fa-upload"></i>
-                                                   <span>Upload Files</span>
-                                               </a>
-                                           </div>
+                                           ${op}
                                        </div>`);
     }
 
@@ -120,7 +125,14 @@ function getWrapper(fileId) {
     return $(`[data-fileid="${fileId}"]`);
 }
 
-function getParam(param){
+function getParam(param) {
     let us = new URLSearchParams(location.search);
     return us.get(param);
+}
+
+function getFilesArray(ids){
+    return ids.map(id => {
+        let file = __Files.find(f => f.id == id);
+        return file;
+    })
 }

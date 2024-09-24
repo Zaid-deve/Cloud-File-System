@@ -29,7 +29,7 @@ class Db
                 if ($res) {
                     if (stripos($qry, "SELECT") === 0) {
                         $data = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
-                        if(count($data) == 1){
+                        if (count($data) == 1) {
                             return count($data[0]) == 1 ? reset($data[0]) : $data[0];
                         }
                         return $data;
@@ -49,7 +49,8 @@ class Db
         return $this->conn->lastInsertId();
     }
 
-    function getStatement(){
+    function getStatement()
+    {
         return $this->stmt;
     }
 

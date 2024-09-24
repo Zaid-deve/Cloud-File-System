@@ -25,8 +25,42 @@ $(function () {
     })
 
     $(".btn-update-profile").click(function () {
-        showErr('Service unavailable at a movement');
-    })
+        $(".popup-update-profile").addClass('working');
+        $(this).prop('disabled', true);
+
+        try {
+            let formData = new FormData();
+            formData.append('name', $("#edit-username").val());
+            formData.append('profile', $("#profileimg")[0].files[0]);
+
+            $.ajax({
+                url: '/cfs/app/php/editProfile.php',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (resp) {
+                    const r = JSON.parse(resp);
+                    if (r.Success) {
+                        $('.userprofile').prop('src', URL.createObjectURL(formData.get('profile')));
+                        $('.username').text(formData.get('name'));
+                        hidePopup();
+                    } else {
+                        showErr(r.Err);
+                    }
+                },
+                error: function (err) {
+                    showErr('An error occurred during the request.');
+                }
+            });
+        } catch (e) {
+            showErr(e.message);
+        } finally {
+            $(".popup-update-profile").removeClass('working');
+            $(this).prop('disabled', false);
+        }
+    });
+
 
 
     // menu listeners
@@ -95,11 +129,12 @@ $(function () {
                     let wrapper = getWrapper(CURRENT_TARGET_ID);
                     if (wrapper.length) {
                         wrapper.find('.file-title').text(filename.val());
+
                         let file = getFile(CURRENT_TARGET_ID);
                         if (file) {
                             file.name = filename.val();
-                            file.read = r
-                            file.write = w
+                            file.perms.read = r
+                            file.perms.write = w
                         }
                     }
                     return;
@@ -122,7 +157,7 @@ $(function () {
         if (__Checked.size) {
             t = Array.from(__Checked)
         } else {
-            t = CURRENT_TARGET_ID
+            t = [CURRENT_TARGET_ID]
         }
 
         if (t) {

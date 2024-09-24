@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else if (!$fileName && !$fileId) {
         $response['Err'] = "Invalid File, Failed to upload !";
     } else {
-        $params = [$uid, $fileName, $fileSize, $fileType, $fileId];
+        $params = ["{$authType}_{$uid}", $fileName, $fileSize, $fileType, $fileId];
         $params = array_map(function ($v) {
             return filter_var($v, FILTER_SANITIZE_SPECIAL_CHARS);
         }, $params);

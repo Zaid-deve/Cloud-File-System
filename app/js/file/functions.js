@@ -42,7 +42,7 @@ async function getUploadHandler(file) {
     xhr.open('POST', uploadUrl.uploadUrl);
 
     xhr.setRequestHeader('Authorization', uploadUrl.authorizationToken);
-    xhr.setRequestHeader('X-Bz-File-Name', encodeURIComponent(file.name));
+    xhr.setRequestHeader('X-Bz-File-Name', encodeURIComponent(file.unqId));
     xhr.setRequestHeader('Content-Type', file.type);
     xhr.setRequestHeader('X-Bz-Content-Sha1', 'do_not_verify');
 
@@ -59,7 +59,7 @@ async function addFileMetaData(file, fileId, callback) {
             fileId: fileId
         };
 
-        $.post(`${baseurl}/app/php/b2/addFileMetaData.php`, fileData, callback);
+        $.post(`${baseurl}/app/php/file/addFileMetaData.php`, fileData, callback);
     }
 }
 
@@ -68,7 +68,8 @@ async function addFileMetaData(file, fileId, callback) {
 // to fetch files
 
 function fetchFiles(options) {
-    let data = { fileType: 'public' };
+    let data = { fileType: 'public' },
+        endpoint = "/fetchFiles.php";
 
     if (options.fileType == 'private') {
         if (!options.passKey) {
@@ -78,9 +79,17 @@ function fetchFiles(options) {
             data.passKey = options.passKey;
             data.fileType = 'private';
         }
+    } else if (options.fileType == 'shared') {
+        if (!options.data) {
+            options?.error("Invalid shared link !");
+            return;
+        }
+
+        data.data = options.data;
+        endpoint = "/fetchSharedFiles.php";
     }
 
-    $.post(`${baseurl}/app/php/b2/fetchFiles.php`, data, function (resp) {
+    $.post(`${baseurl}/app/php/file/${endpoint}`, data, function (resp) {
         try {
             const r = JSON.parse(resp);
             if (r.Success) {
@@ -104,22 +113,14 @@ function searchFiles(files, qry) {
     }
 }
 
-function getTotalSize(data) {
-    let totalSize = 0,
-        fileIds = data instanceof Set ? data : [data];
-
-    fileIds.forEach(fileId => {
-        let file = __Files.find(f => f.id === fileId);
-        if (file && file.size) {
-            totalSize += file.size;
-        }
-    });
-
-    return totalSize;
-}
-
 function getFile(fileid) {
     return __Files.find(f => f.id == fileid);
+}
+
+function getTotalSize(files) {
+    return files.reduce((p, c) => {
+        return p.size + c.size;
+    }, files[0]);
 }
 
 function removeFile(data) {
@@ -243,4 +244,21 @@ async function getSharingLink() {
     }
 
     return resp;
+}
+
+// download functions
+
+function getDownloadHandler(file) {
+    let downloadUrl = file.downloadUrl.split("&authToken=");
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", downloadUrl[0], true);
+    xhr.setRequestHeader("Authorization", `Basic ${downloadUrl[1]}`);
+    return xhr;
+}
+
+function getPendingDownloadSize(files) {
+    return files.reduce((p, c) => {
+        return (p.size - p.loaded) + (c.size - c.loaded);
+    }, files[0])
 }

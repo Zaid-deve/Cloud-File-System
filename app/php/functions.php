@@ -30,11 +30,45 @@ function getDiff($timestamp)
     }
 }
 
-function getFilesMeta(Db $conn, $uid, $isReqHidden = false){
-    if($uid){
-        $stmt = $conn->qry("SELECT file_name name, file_id id,file_size size, file_type type, file_perms perms, file_uploader_id uploader, file_last_viewed recent FROM file_uploads WHERE file_uploader_id = ? AND file_visibility = ?", [$uid, intval($isReqHidden)]);
+function formatBytes($bytes, $precision = 2)
+{
+    $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    if ($bytes == 0) {
+        return '0 B';
+    }
+
+    $log = floor(log($bytes, 1024));
+    $unitIndex = (int) $log;
+    $size = $bytes / pow(1024, $log);
+    return round($size, $precision) . ' ' . $units[$unitIndex];
+}
+
+function getFilesMeta(Db $conn, $authType, $uid, $isReqHidden = false, $recent = false, $max = null)
+{
+    if ($uid) {
+        $maxClouse = $max ? "LIMIT $max" : "";
+        $recentClouse = $recent ? "ORDER BY fid DESC" : "";
+        $stmt = $conn->qry("SELECT file_name name, file_id id,file_size size, file_type type, file_perms perms, file_last_viewed recent FROM file_uploads WHERE file_uploader_id = ? AND file_visibility = ? $maxClouse $recentClouse", ["{$uid}_{$authType}", intval($isReqHidden)]);
         return $stmt;
     }
 
     return false;
+}
+
+
+function getFile(Db $conn, $fileId)
+{
+    if ($fileId) {
+        $stmt = $conn->qry("SELECT file_name name, file_id id,file_size size, file_type type,file_uploader_id file_uploader, file_perms perms,file_timestamp upload_time, file_last_viewed recent FROM file_uploads WHERE file_id = ?", [$fileId]);
+        return $stmt;
+    }
+
+    return false;
+}
+function delFileMeta(Db $conn, $authType, $uid, $fileId)
+{
+    if ($fileId) {
+        $stmt = $conn->qry("DELETE FROM file_uploads WHERE file_id = ? && file_uploader_id = ?", [$fileId, "{$authType}_{$uid}"]);
+        return $stmt;
+    }
 }

@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $placeholders = implode(',', array_fill(0, count($decodedData), '?'));
             $qry = "UPDATE file_uploads SET file_visibility = ? WHERE file_id IN ($placeholders) && file_uploader_id = ?";
-            $params = array_merge([$fileVisibility], $decodedData, [$uid]);
+            $params = array_merge([$fileVisibility], $decodedData, [$authType . "_" . $uid]);
             $stmt = $db->qry($qry, $params);
             if ($stmt !== false) {
                 $resp['Success'] = true;
@@ -41,10 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 throw new Exception('Failed to update file visibility.');
             }
         } else {
-            throw new Exception('No data provided.');
+            throw new Exception('Invalid File');
         }
     } catch (Exception $e) {
-        $resp['Err'] = 'Something Went Wrong: ' . $e->getMessage() . ' ' . $db->getErr();
+        $resp['Err'] = 'Something Went Wrong: ' . $e->getMessage() ;
     }
 }
 

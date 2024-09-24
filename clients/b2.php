@@ -24,12 +24,12 @@ class B2Client extends Client
      * 
      * returns authorization token 
      */
-    protected function getAuthorizationToken()
+    public function getAuthorizationToken()
     {
-        if(!$this->authToken){
+        if (!$this->authToken) {
             $this->authorizeAccount();
         }
-        
+
         return $this->authToken;
     }
 
@@ -61,12 +61,12 @@ class B2Client extends Client
      * Cache auth tokens and api urls
      */
 
-    private function isCacheEnabled()
+    protected function isCacheEnabled()
     {
         return function_exists("apcu_enabled") && apcu_enabled();
     }
 
-    private function cacheClient()
+    protected function cacheClient()
     {
         if (!$this->isCacheEnabled()) {
             return;
@@ -91,6 +91,9 @@ class B2Client extends Client
                 $reAuthTime = Carbon::parse($data['reAuthTime']);
                 if (Carbon::now('UTC')->timestamp < $reAuthTime->timestamp) {
                     $this->initClient($data);
+                } else {
+                    $this->authorizeAccount();
+                    $this->cacheClient();
                 }
             }
         } else {

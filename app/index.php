@@ -90,34 +90,7 @@ echo "<script>const ISPASSKEYSET = '" . !empty($user_passkey) . "'</script>";
         </div>
 
         <!-- file options menu -->
-        <div class="menu-list position-fixed shadow rounded-4 overflow-hidden bg-white p-3">
-            <ul class="list-group d-flex flex-column gap-1">
-                <li class="list-group-item border-0 rounded-5 active" data-action="delete">
-                    <div class="d-flex ycenter gap-2">
-                        <i class="fa-solid fa-trash icon-normal"></i>
-                        <span>Delete file</span>
-                    </div>
-                </li>
-                <li class="list-group-item border-0 rounded-5" data-action="edit">
-                    <div class="d-flex ycenter gap-2">
-                        <i class="fa-solid fa-file-pen icon-normal"></i>
-                        <span>Edit file</span>
-                    </div>
-                </li>
-                <li class="list-group-item border-0 rounded-5" data-action="share">
-                    <div class="d-flex ycenter gap-2">
-                        <i class="fa-solid fa-share icon-normal"></i>
-                        <span>Share file</span>
-                    </div>
-                </li>
-                <li class="list-group-item border-0 rounded-5" data-action="hide">
-                    <div class="d-flex ycenter gap-2">
-                        <i class="fa-solid fa-lock icon-normal"></i>
-                        <span>Hide file</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        <?php require_once "includes/layout/menu.php" ?>
     </div>
 
 
@@ -127,6 +100,7 @@ echo "<script>const ISPASSKEYSET = '" . !empty($user_passkey) . "'</script>";
     <script src="js/popup.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/file/functions.js"></script>
+    <script src="js/file/download.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/file/file.js"></script>
     <script src="js/img.js"></script>

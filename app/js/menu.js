@@ -32,6 +32,17 @@ $(function () {
 
     function displayMenu(coords) {
         if (coords) {
+            if (currPage == 'share.php') {
+                let file = getFile(CURRENT_TARGET_ID);
+                if (file) {
+                    if (!file.perms.write) {
+                        $(".menu-list .list-group-item[data-action='edit']").hide();
+                    } else {
+                        $(".menu-list .list-group-item[data-action='edit']").show();
+                    }
+                }
+            }
+
             $('.menu-list').css(coords)
         }
     }
@@ -74,6 +85,17 @@ $(function () {
 
         if (action === 'share') {
             showSharePopup(t);
+            return;
+        }
+
+        if (action === 'download') {
+            if (typeof t == 'string') {
+                t = [t];
+            } else {
+                t = Array.from(t);
+            }
+
+            showDownloadPopup(getFilesArray(t));
         }
     }
 
@@ -111,6 +133,10 @@ $(function () {
             if (file) {
                 showPopup('popup-edit');
                 $("#edit-filename").val(file.name).focus()
+                let perms = file.perms;
+                $("#view-permission").prop('checked', perms.read);
+                $("#edit-permission").prop('checked', perms.write);
+
                 return;
             }
         }
@@ -118,7 +144,7 @@ $(function () {
         showErr('the file is deleted or is proccessing in background...');
     }
 
-    function showPasskeyPopup(data,action) {
+    function showPasskeyPopup(data, action) {
         if (data) {
             if (!ISPASSKEYSET) {
                 showPopup('popup-set-passkey');
@@ -182,4 +208,5 @@ $(function () {
     $('#btn-share-folder').click(async function () {
         showSharePopup('folder');
     })
+
 })

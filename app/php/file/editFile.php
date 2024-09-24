@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filePerms = $filePerms ?: null;
 
             $qry = "UPDATE file_uploads SET file_name = ?, file_perms = ? WHERE file_id = ? && file_uploader_id = ?";
-            $stmt = $db->qry($qry, [$filename, $filePerms, $fileId, $uid]);
+            $stmt = $db->qry($qry, [$filename, $filePerms, $fileId,$authType . "_" . $uid]);
 
             if ($stmt) {
                 $resp['Success'] = true;

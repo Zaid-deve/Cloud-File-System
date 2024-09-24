@@ -72,7 +72,7 @@ $(function () {
             let fs = Array.from(files);
 
             fs.forEach(f => {
-                f.unqId = generateUniqueFileId(f); // generate unique id for each file
+                f.unqId = generateUniqueFileId(f);
                 createProgressWrapper(f);
 
                 let wrapper = $(`.progress-wrapper[data-unqid="${f.unqId}"]`);
@@ -212,6 +212,7 @@ $(function () {
                     handleServerError(wrapper, r.error || 'Upload Failed');
                 }
             };
+
 
             handler.send(f);
 

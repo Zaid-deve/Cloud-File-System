@@ -66,7 +66,7 @@ $(async function () {
             }
 
             options.data = data;
-            options.fileType == 'shared';
+            options.fileType = 'shared';
         }
 
         fetchFiles(options);
@@ -79,7 +79,13 @@ $(async function () {
             }
 
             if (files && Array.isArray(files)) {
-                __Files = files;
+                __Files = files.map(f => {
+                    let perms = f.perms.split('');
+                    return {
+                        ...f, perms: { read: perms.includes('r'), write: perms.includes('w') }
+                    };
+                });
+
                 if (currPage == 'share.php') {
                     $(".shared-files-count").text(`Shared ${files.length} Files To You.`)
                 }
@@ -160,7 +166,7 @@ $(async function () {
                 allFilesBody.html(output);
             }
 
-            fillContainers();
+            fillContainers(currPage == 'share.php');
         }
 
         // check if file is recent

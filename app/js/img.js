@@ -1,5 +1,7 @@
 $(function () {
     $('body img.is-profile').each((f, i) => {
-        $(i).prop('src', `${baseurl}/app/images/default.png`)
+        $(i).on('error', function(){
+            $(this).prop('src', `${baseurl}/app/images/default.png`)
+        })
     })
 })

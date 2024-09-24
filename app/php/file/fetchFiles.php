@@ -1,6 +1,7 @@
 <?php
 
 require_once "../../config/autoload.php";
+require_once "../b2/b2file.php";
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -19,11 +20,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($err)) {
-        $files = getFilesMeta($db, $uid, $isReqHidden);
+        $files = getFilesMeta($db, $uid, $authType, $isReqHidden);
         if ($files !== false) {
             if ($db->getStatement()->rowCount() == 1) {
                 $files = [$files];
             }
+
+            $b2 = new B2File();
+            $authToken = $b2->getAuthorizationToken();
+
+            $files = array_map(function($f) use ($b2){
+                $f['downloadUrl'] = $b2->getDownloadUrl($f['id']);
+                return $f;
+            }, $files);
+
             $resp['Success'] = true;
             $resp['Files'] = $files;
         } else {

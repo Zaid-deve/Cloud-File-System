@@ -7,7 +7,8 @@ let currPage = location.pathname.split('/').pop();
 // files
 const MaxFileUploadSize = (1024 * 1024 * 50)
 let __Files = [],
-    __Checked = new Set();
+    __Checked = new Set(),
+    __Downloads = [];
 
 // pass key info
 
