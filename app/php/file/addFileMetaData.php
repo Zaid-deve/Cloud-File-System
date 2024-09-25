@@ -6,6 +6,7 @@ require_once "../../config/autoload.php";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // file
     $fileName = htmlentities($_POST['fileName']);
+    $xBzName = htmlentities($_POST['xBzName']);
     $fileSize = htmlentities($_POST['fileSize']);
     $fileType = htmlentities($_POST['fileType']);
     $fileId = htmlentities($_POST['fileId']);
@@ -20,12 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else if (!$fileName && !$fileId) {
         $response['Err'] = "Invalid File, Failed to upload !";
     } else {
-        $params = ["{$authType}_{$uid}", $fileName, $fileSize, $fileType, $fileId];
+        $params = ["{$authType}_{$uid}", $fileName, $xBzName, $fileSize, $fileType, $fileId];
         $params = array_map(function ($v) {
             return filter_var($v, FILTER_SANITIZE_SPECIAL_CHARS);
         }, $params);
 
-        $stmt = $db->qry("INSERT INTO file_uploads (file_uploader_id, file_name,file_size,file_type,file_id) VALUES(?,?,?,?,?)", $params);
+        $stmt = $db->qry("INSERT INTO file_uploads (file_uploader_id, file_name,x_bz_name,file_size,file_type,file_id) VALUES(?,?,?,?,?,?)", $params);
         $response['Success'] = $stmt;
     }
 }

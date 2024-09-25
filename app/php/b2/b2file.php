@@ -4,8 +4,6 @@ require_once "$root/clients/b2.php";
 
 class B2File extends B2Client
 {
-    protected $downloadAuth;
-
     public function __construct()
     {
         parent::__construct();
@@ -45,48 +43,8 @@ class B2File extends B2Client
         return false;
     }
 
-    protected function getDownloadAuth()
+    public function getDownloadUrl($fileName)
     {
-        if ($this->downloadAuth) {
-            return $this->downloadAuth;
-        }
-
-        if ($this->isCacheEnabled() && apcu_exists('b2_download_authorization')) {
-            $data = apcu_fetch('b2_download_authorization');
-            $this->initDownloadAuthorization(json_decode($data, true));
-        } else {
-            $response = $this->sendAuthorizedRequest('POST', 'b2_get_download_authorization', [
-                'bucketId' => $this->getCurrentBucketId(),
-                'fileNamePrefix' => '',
-                'validDurationInSeconds' => (604800  / 2)
-            ]);
-
-            if ($response && $response['authorizationToken']) {
-                $this->downloadAuth = $response['authorizationToken'];
-                if ($this->isCacheEnabled()) {
-                    apcu_store("b2_download_authorization", json_encode([
-                        'authorizationToken' => $this->downloadAuth,
-                        'validDurationInSeconds' => (604800  / 2)
-                    ]));
-                }
-            }
-        }
-    }
-
-    protected function initDownloadAuthorization($data)
-    {
-        $authToken = $data['authorizationToken'];
-        $expiry = $data['validDurationInSeconds'];
-        if ($expiry && time() > $expiry || !$authToken) {
-            apcu_delete('b2_download_authorization');
-            $this->getDownloadAuth();
-        } else {
-            $this->downloadAuth = $authToken;
-        }
-    }
-
-    public function getDownloadUrl($fileId)
-    {
-        return $this->apiUrl . "b2_download_file_by_id?fileId=$fileId&authToken=" . $this->authToken;
+        return $this->downloadUrl . "/file/clouduserfiles/$fileName?Authorization=" . $this->authToken;
     }
 }

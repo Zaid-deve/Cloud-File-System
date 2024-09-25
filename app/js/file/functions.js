@@ -50,16 +50,9 @@ async function getUploadHandler(file) {
 }
 
 // Add metadata after the file is successfully uploaded
-async function addFileMetaData(file, fileId, callback) {
-    if (file && fileId) {
-        const fileData = {
-            fileName: file.name,
-            fileSize: file.size,
-            fileType: file.type,
-            fileId: fileId
-        };
-
-        $.post(`${baseurl}/app/php/file/addFileMetaData.php`, fileData, callback);
+async function addFileMetaData(data, callback) {
+    if (data && data.fileId && data.xBzName) {
+        $.post(`${baseurl}/app/php/file/addFileMetaData.php`, data, callback);
     }
 }
 
@@ -117,10 +110,10 @@ function getFile(fileid) {
     return __Files.find(f => f.id == fileid);
 }
 
-function getTotalSize(files) {
+function getDownloadSize(files) {
     return files.reduce((p, c) => {
-        return p.size + c.size;
-    }, files[0]);
+        return p + (c.size - (c.loaded || 0));
+    }, 0);
 }
 
 function removeFile(data) {
@@ -249,16 +242,12 @@ async function getSharingLink() {
 // download functions
 
 function getDownloadHandler(file) {
-    let downloadUrl = file.downloadUrl.split("&authToken=");
+    let downloadUrl = file.downloadUrl;
+    if (!downloadUrl) {
+        throw new Error('Failed To Downlod File:' + file.name.splice(0, 30) + '...')
+    }
 
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", downloadUrl[0], true);
-    xhr.setRequestHeader("Authorization", `Basic ${downloadUrl[1]}`);
+    xhr.open("GET", downloadUrl, true);
     return xhr;
-}
-
-function getPendingDownloadSize(files) {
-    return files.reduce((p, c) => {
-        return (p.size - p.loaded) + (c.size - c.loaded);
-    }, files[0])
 }

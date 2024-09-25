@@ -48,7 +48,7 @@ function getFilesMeta(Db $conn, $authType, $uid, $isReqHidden = false, $recent =
     if ($uid) {
         $maxClouse = $max ? "LIMIT $max" : "";
         $recentClouse = $recent ? "ORDER BY fid DESC" : "";
-        $stmt = $conn->qry("SELECT file_name name, file_id id,file_size size, file_type type, file_perms perms, file_last_viewed recent FROM file_uploads WHERE file_uploader_id = ? AND file_visibility = ? $maxClouse $recentClouse", ["{$uid}_{$authType}", intval($isReqHidden)]);
+        $stmt = $conn->qry("SELECT file_name name,x_bz_name xBzName, file_id id,file_size size, file_type type, file_perms perms, file_last_viewed recent FROM file_uploads WHERE file_uploader_id = ? AND file_visibility = ? $maxClouse $recentClouse", ["{$uid}_{$authType}", intval($isReqHidden)]);
         return $stmt;
     }
 

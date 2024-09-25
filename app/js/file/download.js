@@ -16,8 +16,11 @@ $(function () {
             downloadProgressContainer.removeClass('d-none');
 
             files.forEach(f => {
-                addProgressWrapper(f);
+                f.unqId = generateUniqueFileId(f);
+                f.status = 0;
+                f.loaded = 0;
                 __Downloads.push(f);
+                addProgressWrapper(f);
             });
 
             updateStats()
@@ -27,14 +30,9 @@ $(function () {
     }
 
     function addProgressWrapper(file) {
-        let unqId = generateUniqueFileId(file);
-        file.unqId = unqId;
-        file.status = 0;
-        file.loaded = 0;
-
         const progressWrapper = $(`
             <div class="col-md-6">
-                <div class="d-flex gap-3 bg-light rounded-2 py-2 ps-3 download-progress-wrapper" data-unqid="${unqId}">
+                <div class="d-flex gap-3 bg-light rounded-2 py-2 ps-3 download-progress-wrapper" data-unqid="${file.unqId}">
                     <div class="file-icon">
                         <i class="fa-solid fa-file fs-1"></i>
                     </div>
@@ -54,11 +52,11 @@ $(function () {
 
     function updateStats() {
         // pending files
-        let pendingFiles = __Downloads.find(f => (f.status == 0 || f.status == 1));
+        let pendingFiles = __Downloads.filter(f => (f.status == 0 || f.status == 1));
 
         let totalFiles = pendingFiles.length,
-            totalSize = totalFiles ? getPendingDownloadSize(pendingFiles) : 0,
-            estimatedTime = totalSize / totalFiles * 1;
+            totalSize = totalFiles ? getDownloadSize(pendingFiles) : 0,
+            estimatedTime = 0;
 
         totalDownloads.text(totalFiles);
         totalDownloadSize.text(formatBytes(totalSize));
@@ -77,29 +75,32 @@ $(function () {
             let pendingFiles = __Downloads.filter(f => f.status == 0);
             if (pendingFiles.length) {
                 for (let f of pendingFiles) {
-                    let handler = getDownloadHandler(f),
-                        wrapper = $(`[data-unqid="${f.unqId}"]`)
+                    let handler, wrapper;
+
                     try {
+                        handler = getDownloadHandler(f)
+                        wrapper = $(`[data-unqid="${f.unqId}"]`)
+
                         f.status = 1;
                         if (!handler) {
                             throw new Error('Failed to download file, please try again !');
                         }
 
+                        file.handler = handler;
+
                         // add handlers
-                        await attachDownloadHandlers(handler, f, wrapper);
+                        await attachDownloadHandlers(f, wrapper);
 
                         // success
                         wrapper.find('.btn-cancel-download').replaceWith('<i class="fa-solid fa-file-circle-check icon-md"></i>');
                     } catch (e) {
-                        if (e.message == 'DOWNLOAD_ERR') {
-                            f.status = -1;
-                            wrapper.addClass('bg-warning');
-                            wrapper.find('.file-progress').html(`<span class='text-danger'>${handler.readyState == 0 ? "cancelled" : "failed"}</span>`)
-                            wrapper.find('.btn-cancel-download').replaceWith('<i class="fa-solid fa-triangle-exclamation icon-md text-danger"></i>');
-
-                        } else {
-                            showErr(e.message);
-                        }
+                        showErr(e.message == "DOWNLOAD_ERR" ? "Something Went Wrong !" : e.message);
+                        f.status = -1;
+                        f.handler = null;
+                        f.loaded = 0;
+                        wrapper.addClass('bg-warning');
+                        wrapper.find('.file-progress').html(`<span class='text-danger'>${handler.readyState == 0 ? "cancelled" : "failed"}</span>`)
+                        wrapper.find('.btn-cancel-download').replaceWith('<i class="fa-solid fa-triangle-exclamation icon-md text-danger"></i>');
                     }
                     finally {
                         // updateStats();
@@ -110,8 +111,14 @@ $(function () {
         }
     }
 
-    function attachDownloadHandlers(xhr, file, wrapper) {
+    function attachDownloadHandlers(file, wrapper) {
         return new Promise((resolve, reject) => {
+            let handler = file.handler;
+            if (!handler) {
+                reject('Failed to download file');
+                return;
+            }
+
             xhr.onprogress = function (event) {
                 if (event.lengthComputable) {
                     file.loaded = event.loaded;

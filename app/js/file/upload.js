@@ -191,7 +191,8 @@ $(function () {
                 progressText.addClass('text-success').text('proccessing...');
 
                 if (r.fileId) {
-                    addFileMetaData(f, r.fileId, function (resp) {
+                    let data = { fileName: f.name, fileSize: f.size, fileType: f.type, xBzName: r.fileName, fileId: r.fileId }
+                    addFileMetaData(data, function (resp) {
                         const r = JSON.parse(resp);
                         if (r && r.Success) {
                             f.status = 'uploaded';

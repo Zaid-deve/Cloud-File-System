@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $authToken = $b2->getAuthorizationToken();
 
             $files = array_map(function($f) use ($b2){
-                $f['downloadUrl'] = $b2->getDownloadUrl($f['id']);
+                $f['downloadUrl'] = $b2->getDownloadUrl($f['xBzName']);
                 return $f;
             }, $files);
 
