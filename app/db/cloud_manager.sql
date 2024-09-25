@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2024 at 05:28 AM
+-- Generation Time: Sep 25, 2024 at 05:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,8 +43,7 @@ CREATE TABLE `facebook_users` (
 --
 
 INSERT INTO `facebook_users` (`user_id`, `user_email`, `user_name`, `user_profile`, `user_pathid`, `user_timestamp`, `user_pass_key`, `user_attempt`) VALUES
-(4, NULL, 'AX Buero', 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1598033444448039&height=50&width=50&ext=1727951981&hash=Abb3tBj9ofw-y-DB3BFQzYlK', NULL, '2024-09-03 10:39:47', NULL, NULL),
-(5, 'patelzaid721@gmail.com', 'AX Buero', 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1598033444448039&height=50&width=50&ext=1727964306&hash=AbZAHmGYvQ6eFNN-vI1bE9Uf', NULL, '2024-09-03 14:05:12', NULL, NULL);
+(5, 'patelzaid721@gmail.com', 'AX Buero 5', 'https://localhost/cfs/app/profiles/profile_66ed82ba166ef7.89948942.png', NULL, '2024-09-03 14:05:12', '$2y$10$el0mPc3831CWE.JzFKWMNesmq35nOk.HkMmBR/SJAvRoRXA1DMMky', NULL);
 
 -- --------------------------------------------------------
 
@@ -54,14 +53,15 @@ INSERT INTO `facebook_users` (`user_id`, `user_email`, `user_name`, `user_profil
 
 CREATE TABLE `file_uploads` (
   `fid` int(11) NOT NULL,
-  `file_uploader_id` int(11) DEFAULT NULL,
+  `file_uploader_id` varchar(50) DEFAULT NULL,
   `file_name` varchar(255) DEFAULT NULL,
+  `x_bz_name` varchar(255) DEFAULT NULL,
   `file_size` int(15) DEFAULT NULL,
   `file_type` varchar(50) DEFAULT NULL,
   `file_id` text DEFAULT NULL,
   `file_last_viewed` timestamp NULL DEFAULT NULL,
   `file_visibility` varchar(255) NOT NULL DEFAULT '0',
-  `file_perms` varchar(10) DEFAULT 'rw',
+  `file_perms` varchar(10) DEFAULT 'r',
   `file_timestamp` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -69,23 +69,17 @@ CREATE TABLE `file_uploads` (
 -- Dumping data for table `file_uploads`
 --
 
-INSERT INTO `file_uploads` (`fid`, `file_uploader_id`, `file_name`, `file_size`, `file_type`, `file_id`, `file_last_viewed`, `file_visibility`, `file_perms`, `file_timestamp`) VALUES
-(188, 4, 'images-removebg-preview.png', 31322, 'image/png', '4_z47baf7917997390d92130812_f10417dd4d333d04a_d20240909_m070119_c002_v0001127_t0022_u01725865279570', NULL, '0', 'rw', '2024-09-09 07:01:34'),
-(189, 4, 'file-management-administration-data-filing-concept-folder-gallery-records-database-flat-illustration-vector-template_128772-1923.webp', 6799, 'image/webp', '4_z47baf7917997390d92130812_f1183bef3a5b7590a_d20240909_m070125_c002_v0001124_t0009_u01725865285028', '2024-09-09 07:01:41', '0', 'rw', '2024-09-09 07:01:41'),
-(190, 4, 'fetch_err.png', 36262, 'image/png', '4_z47baf7917997390d92130812_f1040facd94742250_d20240909_m070134_c002_v0001133_t0046_u01725865294951', NULL, '0', 'rw', '2024-09-09 07:01:48'),
-(191, 4, 'default.png', 29226, 'image/png', '4_z47baf7917997390d92130812_f104b7004d8b6e28b_d20240909_m070142_c002_v0001126_t0043_u01725865302269', NULL, '0', 'rw', '2024-09-09 07:01:55'),
-(192, 4, '3d-illustration-of-file-management-folder-upload-png.webp', 16300, 'image/webp', '4_z47baf7917997390d92130812_f11018e0f1f5f9edb_d20240909_m160245_c002_v0203010_t0011_u01725897765330', NULL, '0', 'rw', '2024-09-09 16:02:57'),
-(193, 3, 'brand_logo - Copy.png', 2804, 'image/png', '4_z47baf7917997390d92130812_f111bf2e8c014a1a0_d20240910_m113003_c002_v0203001_t0018_u01725967803022', NULL, '0', 'rw', '2024-09-10 11:30:13'),
-(194, 3, 'nofiles.png', 80495, 'image/png', '4_z47baf7917997390d92130812_f111f2d9f05e0808f_d20240911_m151420_c002_v0203004_t0049_u01726067660661', NULL, '0', 'rw', '2024-09-11 15:14:34'),
-(195, 3, 'nofiles (2).png', 130851, 'image/png', '4_z47baf7917997390d92130812_f106c009abcf71710_d20240911_m151425_c002_v0203008_t0027_u01726067665039', NULL, '0', 'rw', '2024-09-11 15:14:37'),
-(196, 3, 'no-data-concept-illustration_86047-486.png', 5973, 'image/png', '4_z47baf7917997390d92130812_f1094dbfef0e137b6_d20240911_m151429_c002_v0001162_t0020_u01726067669811', NULL, '0', 'rw', '2024-09-11 15:14:41'),
-(197, 3, 'images-removebg-preview.png', 31322, 'image/png', '4_z47baf7917997390d92130812_f119af1adc879f211_d20240911_m151433_c002_v0203010_t0040_u01726067673709', NULL, '0', 'rw', '2024-09-11 15:14:45'),
-(198, 3, 'file-management-administration-data-filing-concept-folder-gallery-records-database-flat-illustration-vector-template_128772-1923.webp', 6799, 'image/webp', '4_z47baf7917997390d92130812_f11495fc70de04fe9_d20240911_m151437_c002_v0001159_t0040_u01726067677718', NULL, '0', 'rw', '2024-09-11 15:14:49'),
-(199, 3, 'fetch_err.png', 36262, 'image/png', '4_z47baf7917997390d92130812_f112608a68cfa9cea_d20240911_m151441_c002_v0203009_t0021_u01726067681629', NULL, '0', 'rw', '2024-09-11 15:14:53'),
-(200, 3, 'default.png', 29226, 'image/png', '4_z47baf7917997390d92130812_f1054930f20e69de5_d20240911_m151445_c002_v0203010_t0014_u01726067685676', NULL, '0', 'rw', '2024-09-11 15:14:57'),
-(201, 3, 'brand_logo.webp', 2804, 'image/webp', '4_z47baf7917997390d92130812_f1046db534f4db2b7_d20240911_m151449_c002_v0203009_t0038_u01726067689588', NULL, '0', 'rw', '2024-09-11 15:15:00'),
-(202, 3, 'brand_logo - Copy.png', 2804, 'image/png', '4_z47baf7917997390d92130812_f1009a6cb8157dbdb_d20240911_m151453_c002_v0001141_t0039_u01726067693267', NULL, '0', 'rw', '2024-09-11 15:15:06'),
-(203, 3, '3d-illustration-of-file-management-folder-upload-png.webp', 16300, 'image/webp', '4_z47baf7917997390d92130812_f107997259436fe8c_d20240911_m151458_c002_v0001160_t0034_u01726067698940', NULL, '0', 'rw', '2024-09-11 15:15:10');
+INSERT INTO `file_uploads` (`fid`, `file_uploader_id`, `file_name`, `x_bz_name`, `file_size`, `file_type`, `file_id`, `file_last_viewed`, `file_visibility`, `file_perms`, `file_timestamp`) VALUES
+(12, 'facebook_5', 'Zaid patel.pdf', 'Zaidpatel.pdf_407472_1727186948677_752', 407472, 'application/pdf', '4_z47baf7917997390d92130812_f1060e3ce669ff749_d20240924_m140851_c002_v0001142_t0037_u01727186931949', NULL, '0', 'r', '2024-09-24 14:09:15'),
+(13, 'facebook_5', 'WhatsApp Image 2023-11-10 at 11.56.00 AM.jpeg', 'WhatsAppImage2023-11-10at11.56.00AM.jpeg_110424_1727186948674_802', 110424, 'image/jpeg', '4_z47baf7917997390d92130812_f103f5823a3593d8c_d20240924_m140858_c002_v0001143_t0000_u01727186938670', NULL, '0', 'r', '2024-09-24 14:09:22'),
+(14, 'facebook_5', 'StudentVoterCard202205344820240507121245172.jpg', 'StudentVoterCard202205344820240507121245172.jpg_170037_1727186948672_988', 170037, 'image/jpeg', '4_z47baf7917997390d92130812_f115483aa4f047052_d20240924_m140905_c002_v0203010_t0012_u01727186945879', NULL, '0', 'r', '2024-09-24 14:09:27'),
+(15, 'facebook_5', 'phone_ring.mp3', 'phone_ring.mp3_288618_1727186948360_620', 288618, 'audio/mpeg', '4_z47baf7917997390d92130812_f1092f71a03d8563c_d20240924_m140911_c002_v0001164_t0004_u01727186951176', NULL, '0', 'r', '2024-09-24 14:09:34'),
+(16, 'facebook_5', 'pexels-pixabay-33045.jpg', 'pexels-pixabay-33045.jpg_313209_1727186948359_90', 313209, 'image/jpeg', '4_z47baf7917997390d92130812_f1099d1419a999b7f_d20240924_m140919_c002_v0203008_t0028_u01727186959082', NULL, '0', 'r', '2024-09-24 14:09:42'),
+(17, 'facebook_5', 'pexels-photo-771742 (1).webp', 'pexels-photo-771742(1).webp_11156_1727186948358_967', 11156, 'image/webp', '4_z47baf7917997390d92130812_f113d18e9baa5c47d_d20240924_m140925_c002_v0001143_t0052_u01727186965915', NULL, '0', 'r', '2024-09-24 14:09:46'),
+(18, 'facebook_5', 'Mobile user-amico.png', 'Mobileuser-amico.png_517125_1727186948356_984', 517125, 'image/png', '4_z47baf7917997390d92130812_f112ba3e1777979f4_d20240924_m140941_c002_v0203011_t0011_u01727186981603', NULL, '0', 'r', '2024-09-24 14:10:06'),
+(19, 'facebook_5', 'Jadriya jini re jini Ringtone.mp3', 'JadriyajinirejiniRingtone.mp3_475452_1727186948355_272', 475452, 'audio/mpeg', '4_z47baf7917997390d92130812_f11923e81279ed6ae_d20240924_m140949_c002_v0203009_t0013_u01727186989967', NULL, '0', 'r', '2024-09-24 14:10:14'),
+(20, 'facebook_5', 'Fantasy-Wolf-Dark-High-Definition-Wallpaper-112160.jpg', 'Fantasy-Wolf-Dark-High-Definition-Wallpaper-112160.jpg_236185_1727186948352_63', 236185, 'image/jpeg', '4_z47baf7917997390d92130812_f108ba608c306ffc4_d20240924_m140958_c002_v0203011_t0016_u01727186998285', NULL, '0', 'r', '2024-09-24 14:10:21'),
+(21, 'facebook_5', 'caller_ring.mp3', 'caller_ring.mp3_112449_1727186948348_406', 112449, 'audio/mpeg', '4_z47baf7917997390d92130812_f11591015446d9177_d20240924_m141012_c002_v0001164_t0056_u01727187012369', NULL, '0', 'r', '2024-09-24 14:10:34');
 
 -- --------------------------------------------------------
 
@@ -110,7 +104,8 @@ CREATE TABLE `google_users` (
 
 INSERT INTO `google_users` (`user_id`, `user_email`, `user_name`, `user_profile`, `user_pathid`, `user_timestamp`, `user_pass_key`, `user_attempt`) VALUES
 (3, 'patelzaid721@gmail.com', 'ZAID PATEL', 'https://lh3.googleusercontent.com/a/ACg8ocJsg1aqNXwmAbKITmds2jRnhdoVyzH2dEJWRkRBL_jHcCoGE2Y0=s96-c', NULL, '2024-09-03 09:59:42', NULL, NULL),
-(4, 'marshallzaid721@gmail.com', 'zaid deve', 'https://lh3.googleusercontent.com/a/ACg8ocJk6-LvVAzfHAwBF3F75nvLY6B489ALVkZfnBtIJYgc0yXh5A=s96-c', NULL, '2024-09-03 17:04:14', NULL, NULL);
+(4, 'marshallzaid721@gmail.com', 'zaid deve', 'https://lh3.googleusercontent.com/a/ACg8ocJk6-LvVAzfHAwBF3F75nvLY6B489ALVkZfnBtIJYgc0yXh5A=s96-c', NULL, '2024-09-03 17:04:14', NULL, NULL),
+(5, 'yuo.tuber2019@gmail.com', 'ZAID PATEL', 'https://lh3.googleusercontent.com/a/ACg8ocKgovZCqYNpevFSXgh3XIIhyEbJjkMCnIhkWbcL45EjlFKq0Fw=s96-c', NULL, '2024-09-20 14:34:52', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -146,19 +141,19 @@ ALTER TABLE `google_users`
 -- AUTO_INCREMENT for table `facebook_users`
 --
 ALTER TABLE `facebook_users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `file_uploads`
 --
 ALTER TABLE `file_uploads`
-  MODIFY `fid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
+  MODIFY `fid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `google_users`
 --
 ALTER TABLE `google_users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
