@@ -1,15 +1,15 @@
-.btn-toggle-sidebar{
+.btn-toggle-sidebar {
     height: 45px;
     width: 45px;
     border-radius: 150px;
     background: transparent;
 }
 
-.btn-toggle-sidebar:hover{
+.btn-toggle-sidebar:hover {
     background: var(--color--light);
 }
 
-.btn-toggle-sidebar span{
+.btn-toggle-sidebar span {
     display: block;
     height: 2px;
     width: 100%;
@@ -17,37 +17,40 @@
     background-color: var(--color--dark);
 }
 
-.btn-toggle-sidebar span:not(:first-child){
+.btn-toggle-sidebar span:not(:first-child) {
     margin-top: 7px;
 }
 
-.btn-toggle-sidebar.toggle span{
+.btn-toggle-sidebar.toggle span {
     margin-top: 0;
 }
 
-.btn-toggle-sidebar.toggle span:nth-child(1){
+.btn-toggle-sidebar.toggle span:nth-child(1) {
     transform: rotate(-45deg);
 }
 
-.btn-toggle-sidebar.toggle span:nth-child(2){
+.btn-toggle-sidebar.toggle span:nth-child(2) {
     opacity: 0;
 }
 
-.btn-toggle-sidebar.toggle span:nth-child(3){
-    transform: translate(0,-4px) rotate(45deg);
+.btn-toggle-sidebar.toggle span:nth-child(3) {
+    transform: translate(0, -4px) rotate(45deg);
 }
-
 
 .logo-text {
     font-size: 2rem;
 }
 
+.page-logo {
+    width: clamp(25px, 30vw, 40px);
+}
+
 @media (max-width:560px) {
-    .logo-text{
+    .logo-text {
         font-size: .95rem;
     }
 
-    .navbar-brand img{
+    .navbar-brand img {
         height: 35px;
     }
 }

@@ -57,7 +57,6 @@ async function addFileMetaData(data, callback) {
 }
 
 
-
 // to fetch files
 
 function fetchFiles(options) {
@@ -239,15 +238,61 @@ async function getSharingLink() {
     return resp;
 }
 
-// download functions
 
-function getDownloadHandler(file) {
-    let downloadUrl = file.downloadUrl;
-    if (!downloadUrl) {
-        throw new Error('Failed To Downlod File:' + file.name.splice(0, 30) + '...')
+/**
+ * 
+ * 
+ * 
+ * Download Helpers
+ * Download Handlers
+ * Download Managers
+ * 
+ * 
+ */
+
+function getPendingDownloads() {
+    let totalSize = 0,
+        files = __Downloads.filter(f => {
+            if (([0, 1, 2].includes(f.status))) {
+                totalSize += f.size - f.loaded;
+                return f;
+            }
+        }),
+        estTime = 0;
+
+    return {
+        files,
+        size: totalSize,
+        estTime
     }
+}
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", downloadUrl, true);
-    return xhr;
+function getDownloadHandler(f, isPartial) {
+    if (f && f.downloadUrl) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", f.downloadUrl, true);
+        xhr.responseType = "blob";
+
+        if (isPartial && f.loaded > 0) {
+            xhr.setRequestHeader("Range", `bytes=${f.loaded}-${f.size}`);
+        }
+
+        return xhr;
+    }
+}
+
+
+function saveFile(f,data) {
+    const url = URL.createObjectURL(data);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = f.name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function getTotalSize(){
+    return
 }

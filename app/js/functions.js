@@ -78,17 +78,18 @@ function fillContainers(includeUploadBtn = false) {
                             <span>Upload Files</span>
                         </a>
                     </div>`;
+
         }
 
         $('.all-files-body').html(`<div class="p-4 text-center">
-                                           <img src="/cfs/app/images/nofiles (2).png" alt="#" height="180" class="img-contain mx-auto">
-                                           <h3 class="mt-3">No Files Yet !</h3>
+                                           <img src="/cfs/app/images/nfs.png" alt="#" height="220" class="img-contain mx-auto">
+                                           <h3>No Files Yet !</h3>
                                            ${op}
                                        </div>`);
     }
 
-    if (!__Files.length) {
-        $('.btn-check-all').hide();
+    if (__Files.length == 0) {
+        $('.btn-check-all').addClass('d-none');
     }
 }
 

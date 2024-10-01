@@ -1,5 +1,5 @@
 body {
-    background: #fafafa;
+    background: var(--color--light);
 }
 
 .content-wrapper {
@@ -75,4 +75,15 @@ body {
 
 #file-search-inp{
     background: transparent !important;
+}
+
+.dnwld-file-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+
+.dnwld-file-name + p {
+    font-size: .85rem !important;
 }

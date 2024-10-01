@@ -68,36 +68,27 @@ $(function () {
 
     function togglePopup(action, fileId = CURRENT_TARGET_ID) {
         let t = __Checked.size > 0 ? __Checked : fileId;
+
         if (action === 'delete') {
             showDeletePopup(t);
-            return;
-        }
-
-        if (action === 'edit') {
+        } else if (action === 'edit') {
             showEditFile(fileId);
-            return;
-        }
-
-        if (action === 'hide' || action === 'unhide') {
+        } else if (action === 'hide' || action === 'unhide') {
             showPasskeyPopup(t, action);
-            return;
-        }
-
-        if (action === 'share') {
+        } else if (action === 'share') {
             showSharePopup(t);
-            return;
-        }
-
-        if (action === 'download') {
+        } else if (action === 'download') {
             if (typeof t == 'string') {
                 t = [t];
             } else {
                 t = Array.from(t);
             }
-
             showDownloadPopup(getFilesArray(t));
         }
+
+        toggleCheck(Array.from(t), 'uncheck');
     }
+
 
 
     // popup listeners 
@@ -107,14 +98,11 @@ $(function () {
             let totalFiles = 1,
                 totalSize = 0;
 
-            if (data instanceof Set) {
-                if (data.size) {
-                    totalSize = getTotalSize(data);
-                    totalFiles = data.size;
-                }
-            } else {
-                totalSize = getTotalSize(data);
-            }
+            data = typeof data != "string" ? Array.from(data) : [data];
+            totalFiles = data.length;
+            data.forEach(f => {
+                totalSize += f.size;
+            })
 
             if (totalSize) {
                 totalSize = formatBytes(totalSize);

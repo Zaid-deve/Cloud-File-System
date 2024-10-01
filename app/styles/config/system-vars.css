@@ -3,22 +3,22 @@
 
 :root {
     /* colors */
-    --color--primary: #134B70;
-    /* A modern and vibrant blue */
-    --color--secondary: #0077b6;
-    /* A complementary lighter blue */
-    --color--light: #f1f7fc;
-    /* A very light blue for backgrounds */
-    --color--dark: #201F1F;
-    /* A deep, contrasting blue */
-    --color--light--30: rgba(255,255,255,.3);
-    /* Light blue with 30% opacity */
-    --color--danger: #ee271d;
-    /* Danger */
-
+    --color--primary: #5d58df;
+    /* A bold, vibrant coral red */
+    --color--secondary: #f3504d;
+    /* A bright, electric blue */
+    --color--light: #f8f8ff;
+    /* A clean, neutral off-white */
+    --color--dark: #0b1535;
+    /* A rich, deep charcoal */
+    --color--light--30: rgba(255, 255, 255, .3);
+    /* Transparent white for overlays */
+    --color--danger: #ff3f34;
+    /* A striking, energetic red */
+    --color--hover: #f75c5a;
 
     /* fonts */
-    --font--primary: "Open Sans", sans-serif;
+    --font--primary: "Poppins", sans-serif;
 
     /* default component height */
     --header--height: 6.125em;

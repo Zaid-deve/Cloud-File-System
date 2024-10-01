@@ -1,4 +1,11 @@
 $(function () {
+    let btnShowDownloads = $('.btn-show-download-popup');
+    if(btnShowDownloads.length){
+        btnShowDownloads.click(function(){
+            showPopup('popup-download');
+        })
+    }
+
     $(".popup-container").click(function (e) {
         let t = $(e.target).closest('.popup');
         if (!t.length) {

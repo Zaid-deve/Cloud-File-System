@@ -46,6 +46,18 @@ if ($files !== false) {
     }
 }
 
+if(!$recentData){
+    $recentData = '<div class="text-center">
+                        <p class="text-muted">It looks like you havent uploaded any files recently, <br> start uploading files end-to-end encrypted</p>
+                        <div class="d-flex flex-center">
+                            <a href="/cfs/app/upload/upload.php" class="btn bg-prime-color px-4 rounded-5 mt-3 has-icon">
+                                <i class="fa-solid fa-upload"></i>
+                                <span>Upload Files</span>
+                            </a>
+                        </div>
+                   </div>';
+}
+
 ?>
 
 <body class="bg-light">

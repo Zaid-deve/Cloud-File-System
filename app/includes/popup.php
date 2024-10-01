@@ -212,18 +212,20 @@
                                 </div>
                             </div>
 
-                            <div class="mt-3 download-progress-container d-none overflow-auto" style="min-height: 200px;max-height:320px;">
-                                <div class="row row-gap-3"></div>
+                            <div class="mt-3 download-progress-container overflow-auto" style="height:250px">
+                                <div class="row row-gap-3">
+                                    <div class="col-12 text-center">
+                                        <img src="/cfs/app/images/nodnlds.png" alt="#" class="img-contain" width="180">
+                                        <h3 class="mt-2 mb-1">Nothing To Download !</h3>
+                                        <small class="text-muted">Downloads are easy and convinent on our site</small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="card-footer download-btns d-none">
                             <div class="d-flex justify-content-end gap-3">
-                                <button class="btn btn-outline-muted border has-icon px-3 gap-3 rounded-3">
-                                    <i class="fa-solid fa-pause prime-color"></i>
-                                    <span class="fw-boldim prime-color">Pause All</span>
-                                </button>
-                                <button class="btn btn-danger has-icon px-3 gap-3 rounded-3">
+                                <button class="btn btn-danger has-icon px-3 gap-3 rounded-3 btn-cancel-all-downloads">
                                     <i class="fa-solid fa-ban"></i>
                                     <span class="fw-bold">Cancel All</span>
                                 </button>

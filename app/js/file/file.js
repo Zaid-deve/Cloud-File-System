@@ -1,13 +1,14 @@
 let displayFiles,
     displayFetchErr,
-    checkStrict;
+    checkAllBtn;
 
 $(async function () {
     // components
     const allFilesBody = $(".all-files-body"),
         recentFilesContainer = $('.recent-files-container'),
-        recentFilesBody = $('.recent-files-body'),
-        checkAllBtn = $(".btn-check-all");
+        recentFilesBody = $('.recent-files-body');
+
+    checkAllBtn = $(".btn-check-all");
 
     // to display files fething error
     displayFetchErr = function (err) {
@@ -91,21 +92,11 @@ $(async function () {
                 }
 
                 if (files.length == 0) {
-                    recentFilesContainer.hide();
-                    allFilesBody.html(`<div class="p-4 text-center">
-                                       <img src="/cfs/app/images/nofiles (2).png" alt="#" height="180" class="img-contain mx-auto">
-                                       <h3 class="mt-3">No Files Yet !</h3>
-                                       <small>It looks like you dont have files to show heare, <br> start uploading files end-to-end encrypted</small>
-                                       <div class="d-flex flex-center">
-                                           <a href="/cfs/app/upload/upload.php" class="btn bg-prime-color px-4 rounded-5 mt-3 has-icon">
-                                               <i class="fa-solid fa-upload"></i>
-                                               <span>Upload Files</span>
-                                           </a>
-                                       </div>
-                                   </div>`);
+                    fillContainers(false);
                     return;
                 }
 
+                $('.btn-check-all').removeClass('d-none');
                 displayFiles(files);
             } else {
                 displayFetchErr();
@@ -125,41 +116,46 @@ $(async function () {
                 files.forEach(f => {
                     isRecentFile = isRecent(Date.parse(f.recent));
                     let wrapper = `<div class="file-wrapper rounded-4 overflow-hidden border border-1" data-fileid="${f.id}" data-source="${isRecentFile ? 0 : 1}">
-                                   <div class="file-wrapper-prev d-flex flex-center position-relative">
-                                       <div class="file-wrapper-icon">
-                                           <i class="fa-solid fa-file file-icon"></i>
-                                       </div>
-                                       <div class="file-sel-body position-absolute top-0 start-0 w-100 h-100 p-3" data-checked="false" onclick='checkWrapper(event)'>
-                                            <i class="fa-solid fa-file-circle-check icon-md prime-color check-icon fade"></i>
-                                       </div>
-                                   </div>
-                                   <div class="file-wrapper-body bg-light">
-                                       <div class="d-flex ycenter justify-content-between py-2 px-3 gap-2">
-                                           <p class="file-title text-muted fw-bold m-0">${f.name}</p>
-                                           <button class="btn btn-rounded bg-white flex-shrink-0" onclick='showMenu(event)'>
-                                               <i class="fa-solid fa-ellipsis text-dark"></i>
-                                           </button>
-                                       </div>
-                                   </div>
-                               </div>`
+                                        <div class="file-wrapper-prev d-flex flex-center position-relative" onclick='toggleCheck("${f.id}")'>
+                                            <div class="file-wrapper-icon">
+                                                <i class="fa-solid fa-file file-icon"></i>
+                                            </div>
+                                            <input type='checkbox' class='file-check-inp' hidden>
+                                            <div class='position-absolute z-1 top-0 start-0 h-100 w-100 p-3'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-folder-check check-icon fade" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a2 2 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2m5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19q-.362.002-.683.12L1.5 2.98a1 1 0 0 1 1-.98z"/>
+                                                    <path d="M15.854 10.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.707 0l-1.5-1.5a.5.5 0 0 1 .707-.708l1.146 1.147 2.646-2.647a.5.5 0 0 1 .708 0"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="file-wrapper-body bg-light">
+                                            <div class="d-flex ycenter justify-content-between py-1 px-3 gap-2">
+                                                <p class="file-title text-muted fw-bold m-0">${f.name}</p>
+                                                <button class="btn btn-rounded bg-white flex-shrink-0" onclick='showMenu(event)'>
+                                                    <i class="fa-solid fa-ellipsis text-dark"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                   </div>`
 
                     // display if its an recent file
                     if (isRecentFile) {
                         recentOutput += wrapper;
                     }
 
-                    output += `<div class="col-md-6 col-lg-4">
-                            ${wrapper}
-                           </div>`;
+                    output += `<div class="col-sm-6 col-lg-4">
+                                ${wrapper}
+                               </div>`;
                 })
-
 
                 if (recentOutput) {
                     recentFilesBody.html(`<div class="d-flex gap-4 overflow-scroll">${recentOutput}</div>`)
                     recentFilesContainer.addClass('visible');
+                    recentFilesContainer.removeClass("d-none");
                 } else {
                     recentFilesContainer.hide();
                     recentFilesContainer.removeClass('visible');
+                    recentFilesContainer.addClass("d-none");
                 }
 
                 output + '</div>'
@@ -176,32 +172,52 @@ $(async function () {
             }
         }
 
-
         // select all files
         checkAllBtn.click(function () {
-            if (__Files.length !== __Checked.size) checkStrict = true;
-            $(".file-wrapper .file-sel-body").click();
-            checkStrict = false;
-        })
+            if (__Checked.size !== __Files.length) {
+                toggleCheck(__Files.map(f => f.id), 'check');
+            } else {
+                toggleCheck(__Files.map(f => f.id), 'uncheck');
+            }
+        });
+
     } catch (e) {
         displayFetchErr(e.message);
     }
 })
 
-function checkWrapper(ev) {
-    let fileId = ev.target.closest('.file-wrapper').dataset.fileid
-    if (fileId) {
-        let t = $(ev.target);
-        if (!t.data('checked') || checkStrict) {
-            t.addClass('checked');
-            t.data('checked', true);
-            t.find('.check-icon').addClass('show');
-            __Checked.add(fileId);
-        } else {
-            t.data('checked', false);
-            t.removeClass('checked')
-            t.find('.check-icon').removeClass('show');
-            __Checked.delete(fileId);
+function toggleCheck(fileIds, action = 'toggle') {
+    if (!Array.isArray(fileIds)) fileIds = [fileIds];
+
+    fileIds.forEach(id => {
+        let fileWrapper = $(`[data-fileid="${id}"]`),
+            checkbox = fileWrapper.find('.file-check-inp'),
+            checkIcon = fileWrapper.find('.check-icon'),
+            isChecked = checkbox.prop('checked');
+
+        if (action === 'toggle') {
+            checkbox.prop('checked', !isChecked)
+        } else if (action === 'check') {
+            checkbox.prop('checked', true);
+        } else if (action === 'uncheck') {
+            checkbox.prop('checked', false);
         }
+
+        if (checkbox.prop('checked')) {
+            checkIcon.addClass("show");
+            __Checked.add(id);
+            fileWrapper.fadeTo(250, .5)
+        } else {
+            checkIcon.removeClass("show");
+            fileWrapper.fadeTo(250, 1)
+            __Checked.delete(id);
+        }
+    });
+
+    if (__Checked.size == __Files.length) {
+        checkAllBtn.find('span').text('select all');
+    } else {
+        checkAllBtn.find('span').text('un select all');
     }
+
 }
