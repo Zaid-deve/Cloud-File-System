@@ -1,4 +1,5 @@
-let showMenu;
+let showMenu,
+    showSharePopup;
 
 
 $(function () {
@@ -146,7 +147,7 @@ $(function () {
 
     const copyLinkBtn = $('#btn-copy-link');
 
-    async function showSharePopup(data, copy = false) {
+    showSharePopup = async function (data, copy = false) {
         if (data) {
             showPopup('popup-share');
             copyLinkBtn.prop('disabled', true).addClass("working");

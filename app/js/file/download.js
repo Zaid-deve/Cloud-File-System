@@ -35,7 +35,9 @@ $(function () {
             })
 
             updateStats();
-            toggleCheck(files.map(fl => fl.id), 'uncheck');
+            if (currPage != 'file.php') {
+                toggleCheck(files.map(fl => fl.id), 'uncheck');
+            }
             if (!downloadActive) {
                 downloadFiles();
             }

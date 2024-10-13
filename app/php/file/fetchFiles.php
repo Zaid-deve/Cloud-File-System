@@ -3,7 +3,6 @@
 require_once "../../config/autoload.php";
 require_once "../b2/b2file.php";
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fileType = $_POST['fileType'] ?? 'public';
     $passkey = $_POST['passKey'] ?? null;
@@ -20,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($err)) {
-        $files = getFilesMeta($db, $uid, $authType, $isReqHidden);
+        $files = getFilesMeta($db,$authType,$uid,$isReqHidden);
         if ($files !== false) {
             if ($db->getStatement()->rowCount() == 1) {
                 $files = [$files];
@@ -37,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $resp['Success'] = true;
             $resp['Files'] = $files;
         } else {
-            $resp['Err'] = "Something Went Wrong !";
+            $resp['Err'] = "Something Went Wrong !" . $db->getErr();
         }
     } else $resp['Err'] = $err;
 }

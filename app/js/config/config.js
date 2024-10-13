@@ -13,3 +13,6 @@ let __Files = [],
 // pass key info
 
 let CURRENT_USER_PASSKEY;
+
+// types
+let ImgTypes = ['png', 'jpg', 'jpeg', 'gif', 'webp'];

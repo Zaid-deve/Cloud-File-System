@@ -2,6 +2,20 @@
     min-height: 120px;
 }
 
-.file-icon{
+.file-icon {
     font-size: clamp(60px, 40%, 100px);
+}
+
+.skeleton {
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: hsl(200, 20%, 100%);
+    }
+
+    100% {
+        background-color: hsl(200, 20%, 90%);
+    }
 }

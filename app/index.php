@@ -11,6 +11,8 @@ echo "<script>const ISPASSKEYSET = '" . !empty($user_passkey) . "'</script>";
 <link rel="stylesheet" href="styles/layout/header.css">
 <link rel="stylesheet" href="styles/layout/sidebar.css">
 <link rel="stylesheet" href="styles/index.css">
+<link rel="stylesheet" href="styles/file.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/file-icon-vectors@1.0.0/dist/file-icon-vivid.min.css" />
 </head>
 
 <body>
@@ -50,7 +52,7 @@ echo "<script>const ISPASSKEYSET = '" . !empty($user_passkey) . "'</script>";
                         </div>
                     </div>
                 </div>
-                <div class="container-fluid">
+                <div class="container-fluid mt-3">
                     <div class="files-container">
                         <div class="recent-files-container d-none">
                             <!-- Recent Files Section -->

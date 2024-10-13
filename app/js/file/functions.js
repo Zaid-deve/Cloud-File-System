@@ -282,7 +282,7 @@ function getDownloadHandler(f, isPartial) {
 }
 
 
-function saveFile(f,data) {
+function saveFile(f, data) {
     const url = URL.createObjectURL(data);
     const a = document.createElement('a');
     a.href = url;
@@ -293,6 +293,43 @@ function saveFile(f,data) {
     URL.revokeObjectURL(url);
 }
 
-function getTotalSize(){
+function getTotalSize() {
     return
+}
+
+
+function toggleCheck(fileIds, action = 'toggle') {
+    if (!Array.isArray(fileIds)) fileIds = [fileIds];
+
+    fileIds.forEach(id => {
+        let fileWrapper = $(`[data-fileid="${id}"]`),
+            checkbox = fileWrapper.find('.file-check-inp'),
+            checkIcon = fileWrapper.find('.check-icon'),
+            isChecked = checkbox.prop('checked');
+
+        if (action === 'toggle') {
+            checkbox.prop('checked', !isChecked)
+        } else if (action === 'check') {
+            checkbox.prop('checked', true);
+        } else if (action === 'uncheck') {
+            checkbox.prop('checked', false);
+        }
+
+        if (checkbox.prop('checked')) {
+            checkIcon.addClass("show");
+            __Checked.add(id);
+            fileWrapper.fadeTo(250, .5)
+        } else {
+            checkIcon.removeClass("show");
+            fileWrapper.fadeTo(250, 1)
+            __Checked.delete(id);
+        }
+    });
+
+    if (__Checked.size == __Files.length) {
+        checkAllBtn.find('span').text('select all');
+    } else {
+        checkAllBtn.find('span').text('un select all');
+    }
+
 }

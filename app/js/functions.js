@@ -131,9 +131,17 @@ function getParam(param) {
     return us.get(param);
 }
 
-function getFilesArray(ids){
+function getFilesArray(ids) {
     return ids.map(id => {
         let file = __Files.find(f => f.id == id);
         return file;
     })
+}
+
+function getFileIcon(fileType) {
+    return "fiv-viv fiv-icon-" + fileType.replace('plain', 'txt');
+}
+
+function isImageFile(fmime, ftype) {
+    return fmime === 'image' || ImgTypes.includes(ftype);
 }
