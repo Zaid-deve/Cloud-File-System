@@ -7,34 +7,15 @@ require_once "../../../clients/google.php";
 if (isset($_GET['code'])) {
     try {
         // get access token
-        $googleClient->fetchAccessTokenWithAuthCode($_GET['code']);
-        $token = $googleClient->getAccessToken()['access_token'];
-        $_SESSION['access_token'] = $token;
-        $googleClient->setAccessToken($token);
+        $token = $googleClient->getAccessToken('authorization_code', ['code' => $_GET['code']]);
+        $_SESSION['access_token'] = $token->getToken();
 
         // Get user information
-        $curl = curl_init("https://www.googleapis.com/oauth2/v1/userinfo?access_token=$token");
-        curl_setopt_array($curl, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER => [
-                "Authorization: Bearer $token",
-                "Accept: application/json"
-            ]
-        ]);
+        $user = $googleClient->getResourceOwner($token);
 
-        $response = curl_exec($curl);
-
-        if (curl_error($curl) || !$response) {
-            throw new Exception('Fetch User Info Failed !');
-        }
-
-        // get user data
-
-        $response = json_decode($response, true);
-        $email = $response['email'];
-        $name = $response['given_name'] . ' ' . $response['family_name'];
-        $profile = $response['picture'];
-
+        $email = $user->getEmail();
+        $name = $user->getName();
+        $profile = $user->getAvatar();
         if (!$email) {
             header("signin.php?err=auth0");
             throw new Exception("Invalid account !");

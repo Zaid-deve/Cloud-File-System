@@ -18,7 +18,9 @@
     --color--hover: #f75c5a;
 
     /* fonts */
-    --font--primary: "Poppins", sans-serif;
+    /* --font--primary: "Poppins", sans-serif; */
+    /* --font--primary: "Fira Code", monospace; */
+    --font--primary: "Raleway", sans-serif;
 
     /* default component height */
     --header--height: 6.125em;

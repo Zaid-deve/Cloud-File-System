@@ -10,7 +10,7 @@ if($uid){
 
 // get auth urls
 require_once "../../../clients/google.php";
-$google_auth = $googleClient->createAuthUrl();
+$google_auth = $googleClient->getAuthorizationUrl();
 
 // facebook auth
 require_once "../../../clients/facebook.php";
