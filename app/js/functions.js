@@ -139,7 +139,7 @@ function getFilesArray(ids) {
 }
 
 function getFileIcon(fileType) {
-    return "fiv-viv fiv-icon-" + fileType.replace('plain', 'txt');
+    return "fiv-viv fiv-icon-" + fileType?.replace('plain', 'txt');
 }
 
 function isImageFile(fmime, ftype) {

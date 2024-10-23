@@ -23,6 +23,7 @@ require_once "../includes/layout/head.php";
 <link rel="stylesheet" href="../styles/layout/header.css">
 <link rel="stylesheet" href="../styles/index.css">
 <link rel="stylesheet" href="../styles/file.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/file-icon-vectors@1.0.0/dist/file-icon-vivid.min.css" />
 
 <body class="bg-light">
 

@@ -65,7 +65,7 @@ a {
     color: var(--color--light);
 }
 
-.btn:not(.btn-light,.bg-light-color) :where(i, .icon-svg, span) {
+.btn:not(.btn-light, .bg-light-color) :where(i, .icon-svg, span) {
     color: var(--color--light);
 }
 
@@ -112,6 +112,7 @@ a {
     0% {
         opacity: 0.2;
     }
+
     100% {
         opacity: 1;
     }
@@ -121,6 +122,7 @@ a {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -182,6 +184,10 @@ a {
 
 .img-contain {
     object-fit: contain;
+}
+
+.is-profile {
+    aspect-ratio: 1/1;
 }
 
 /* Icon sizes */
