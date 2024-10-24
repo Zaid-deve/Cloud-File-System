@@ -3,7 +3,7 @@
 $isAuthNotRequired = true;
 require_once "../../config/autoload.php";
 
-if($uid){
+if ($uid) {
     header("Location:../../");
     die();
 }
@@ -16,6 +16,10 @@ $google_auth = $googleClient->getAuthorizationUrl();
 require_once "../../../clients/facebook.php";
 $facebook_auth = $fbHelper->getLoginUrl("$baseurl/app/user/auth/signin-facebook.php", ['email']);
 
+// github auth url
+require_once "../../../clients/github.php";
+$github_auth = $github_client->getAuthorizationUrl();
+$_SESSION['oauth2state'] = $github_client->getState();
 
 require_once "../../includes/layout/head.php";
 ?>
@@ -65,9 +69,13 @@ require_once "../../includes/layout/head.php";
                             <i class="fa-brands fa-google icon-md text-dark"></i>
                             <span class="text-dark">Continue with google</span>
                         </a>
-                        <a href="<?php echo $facebook_auth ?>" class="btn bg-dark-color has-icon justify-content-start rounded-5 py-3 px-4 mt-3 auth-red-btn">
+                        <a href="<?php echo $facebook_auth ?>" class="btn bg-prime-color has-icon justify-content-start rounded-5 py-3 px-4 mt-3 auth-red-btn">
                             <i class="fa-brands fa-facebook icon-md"></i>
                             <span>Continue with Facebook</span>
+                        </a>
+                        <a href="<?php echo $github_auth ?>" class="btn bg-dark-color has-icon justify-content-start rounded-5 py-3 px-4 mt-3 auth-red-btn">
+                            <i class="fa-brands fa-github icon-md"></i>
+                            <span>Continue with Github</span>
                         </a>
                     </div>
                     <small class="d-block mt-3 text-center">By Continue, You Agreed To Our <a href="#">Terms</a> And <a href="#">Services</a></small>
