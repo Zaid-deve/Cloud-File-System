@@ -25,7 +25,7 @@ if ($isPrivate && !$isOwner) {
 unset($fileMeta['file_uploader']);
 
 $fd = explode("/", $fileMeta['type']);
-$isTxt = $fd[0] === 'text' || array_search($fd[1], ['txt', 'json', 'xml', 'html']);
+$isTxt = $fd[0] === 'text' || array_search($fd[1] ?? '', ['txt', 'json', 'xml', 'html']);
 
 require_once "../includes/layout/head.php";
 
