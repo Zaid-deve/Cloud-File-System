@@ -1,6 +1,6 @@
 # Cloud File Management System
 
-![Cloud File Management](path/to/logo.png) <!-- Replace with your logo -->
+![Cloud File Management](https://raw.githubusercontent.com/Zaid-deve/Cloud-File-System/refs/heads/master/app/images/brand_logo.webp?token=GHSAT0AAAAAACZUDKO5BLR6FARAO6LQMH56ZZI3XLQ) <!-- Replace with your logo -->
 
 ## Table of Contents
 
